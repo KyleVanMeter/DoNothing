@@ -58,7 +58,6 @@ export class DoNothing extends Component {
     }
 
     render() {
-        let thing = this.state.someNum;
         let tableBody = this.renderTable();
         let tableHead = this.renderHead();
         return (
@@ -86,10 +85,8 @@ export class DoNothing extends Component {
     async populateData() {
         //TODO: Have the query return something related to the filesystem like # of MP3, 
         //or something more complex like structured data for each filetype(.ogg, .mp3, .flacs, etc.)
-        console.log("GET sent0");
         const resp = await fetch('donothing');
         const data = await resp.json();
-        console.log("GET sent1");
         this.setState({someNum: data})
     }
 }
