@@ -13,7 +13,14 @@ namespace test02.Controllers
         [HttpGet]
         public ActionResult Get()
         {
-            return Ok(42);
+            string folder = @"C:\AMD\";
+
+            System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(folder);
+            IEnumerable<System.IO.FileInfo> fileList = dir.GetFiles("*.*", System.IO.SearchOption.TopDirectoryOnly);
+
+            var queryFile = from file in fileList where file.Extension == ".txt" select file.FullName;
+
+            return Ok(queryFile.Count());
         }
     }
 }
