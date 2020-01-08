@@ -8,7 +8,8 @@ export class DoNothing extends Component {
 
         this.populateData = this.populateData.bind(this);
         this.state = {
-            someNum: "", someData: {
+            someNum: "", someFile: [],
+            someData: {
                 headers: [
                     1,
                     2,
@@ -76,17 +77,17 @@ export class DoNothing extends Component {
                     </table>
                 </div>
                 <p>This is HTML.  Below is something we fetch.</p>
-                <p>{this.state.someNum}</p>
+                <p>{this.state.someFile.map(item => 
+                    <p>{item.artist[0]} - {item.album} {item.year}</p>
+                )}</p>
                 <button className="btn btn-primary" onClick={this.populateData}>Re-send request</button>
             </div>
         );
     }
 
     async populateData() {
-        //TODO: Have the query return something related to the filesystem like # of MP3, 
-        //or something more complex like structured data for each filetype(.ogg, .mp3, .flacs, etc.)
         const resp = await fetch('donothing');
         const data = await resp.json();
-        this.setState({someNum: data})
+        this.setState({someFile: data})
     }
 }
