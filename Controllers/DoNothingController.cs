@@ -15,7 +15,7 @@ namespace test02.Controllers
         [HttpGet]
         public IEnumerable<DoNothing> Get()
         {
-            string folder = @"E:\Music\Main\Rap\";
+            string folder = @"E:\Music\Main\Bleep\";
 
             System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(folder);
             IEnumerable<System.IO.FileInfo> fileList = dir.GetFiles("*.*", System.IO.SearchOption.AllDirectories);
@@ -51,6 +51,7 @@ namespace test02.Controllers
 
                 container.Add(new DoNothing
                 {
+                    Track  = tFile.Tag.Disc + "." + tFile.Tag.Track,
                     Album  = tFile.Tag.Album,
                     Artist = tFile.Tag.AlbumArtists,
                     Year   = "(" + tFile.Tag.Year + ")",

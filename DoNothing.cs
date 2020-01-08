@@ -10,5 +10,6 @@ namespace test02
         public string[] Artist { get; set; }
         public string Year { get; set; }
         public string Time { get; set; }
+        public string Track { get; set; }
     }
 }

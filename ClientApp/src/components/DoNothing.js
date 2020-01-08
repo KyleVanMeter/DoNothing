@@ -11,6 +11,7 @@ export class DoNothing extends Component {
             someNum: "", someFile: [],
             someData: {
                 headers: [
+                    "Track #",
                     "Artist",
                     "Album",
                     "Year",
@@ -25,7 +26,8 @@ export class DoNothing extends Component {
             this.state.someFile.map((item, index) => {
                 return (
                     <tr key={index}>
-                        <td>{item['artist'][0]}</td>
+                        <td>{item['track']}</td>
+                        <td>{item['artist'].join(", ")}</td>
                         <td>{item['album']}</td>
                         <td>{item['year']}</td>
                         <td align='right'>{item['time']}</td>
