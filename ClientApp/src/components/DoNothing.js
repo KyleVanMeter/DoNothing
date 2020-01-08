@@ -23,8 +23,6 @@ export class DoNothing extends Component {
     renderTable() {
         return (
             this.state.someFile.map((item, index) => {
-                const { Artist, Album, Year } = item
-                console.log(Album);
                 return (
                     <tr key={index}>
                         <td>{item['artist'][0]}</td>
