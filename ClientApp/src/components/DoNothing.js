@@ -11,15 +11,10 @@ export class DoNothing extends Component {
             someNum: "", someFile: [],
             someData: {
                 headers: [
-                    1,
-                    2,
-                    3
-                ],
-                rows: [
-                    { thing1: 'a', thing2: 'b', thing3: 'x', thing4: '1' },
-                    { thing1: 'c', thing2: 'd', thing3: 'y', thing4: '2' },
-                    { thing1: 'e', thing2: 'f', thing3: 'z', thing4: '3' },
-                    { thing1: 'g', thing2: 'h', thing3: '?', thing4: '4' }
+                    "Artist",
+                    "Album",
+                    "Year",
+                    "Time"
                 ]
             }
         };
@@ -27,15 +22,15 @@ export class DoNothing extends Component {
 
     renderTable() {
         return (
-            this.state.someData.rows.map((thing, index) => {
-                const { thing1, thing2, thing3, thing4 } = thing
-
+            this.state.someFile.map((item, index) => {
+                const { Artist, Album, Year } = item
+                console.log(Album);
                 return (
                     <tr key={index}>
-                        <td>{thing1}</td>
-                        <td>{thing2}</td>
-                        <td>{thing3}</td>
-                        <td align='right'>{thing4}</td>
+                        <td>{item['artist'][0]}</td>
+                        <td>{item['album']}</td>
+                        <td>{item['year']}</td>
+                        <td align='right'>{item['time']}</td>
                     </tr>
                 )
             })
@@ -76,10 +71,7 @@ export class DoNothing extends Component {
                         </tbody>
                     </table>
                 </div>
-                <p>This is HTML.  Below is something we fetch.</p>
-                <p>{this.state.someFile.map(item => 
-                    <p>{item.artist[0]} - {item.album} {item.year}</p>
-                )}</p>
+                
                 <button className="btn btn-primary" onClick={this.populateData}>Re-send request</button>
             </div>
         );

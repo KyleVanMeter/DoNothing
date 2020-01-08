@@ -9,5 +9,6 @@ namespace test02
         public string Album { get; set; }
         public string[] Artist { get; set; }
         public string Year { get; set; }
+        public string Time { get; set; }
     }
 }

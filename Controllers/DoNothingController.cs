@@ -39,7 +39,10 @@ namespace test02.Controllers
                 {
                     Album  = tFile.Tag.Album,
                     Artist = tFile.Tag.AlbumArtists,
-                    Year   = "(" + tFile.Tag.Year + ")"
+                    Year   = "(" + tFile.Tag.Year + ")",
+                    Time   = tFile.Properties.Duration.Hours 
+                    + ":" + tFile.Properties.Duration.Minutes 
+                    + ":" + tFile.Properties.Duration.Seconds
                 });
             }
 
