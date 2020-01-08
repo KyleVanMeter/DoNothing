@@ -32,25 +32,36 @@ namespace test02.Controllers
             {
                 new DoNothing { }
             };
+
             foreach(System.IO.FileInfo fi in queryMP3)
             {
                 var tFile = TagLib.File.Create(fi.FullName);
+                Func<TagLib.File, string> convertTime = (x) => { 
+                    if (x.Properties.Duration.Hours == 0)
+                    {
+                        return x.Properties.Duration.Minutes 
+                        + ":" + x.Properties.Duration.Seconds;
+                    } else
+                    {
+                        return x.Properties.Duration.Hours
+                        + ":" + x.Properties.Duration.Minutes
+                        + ":" + x.Properties.Duration.Seconds;
+                    }
+                };
+
                 container.Add(new DoNothing
                 {
                     Album  = tFile.Tag.Album,
                     Artist = tFile.Tag.AlbumArtists,
                     Year   = "(" + tFile.Tag.Year + ")",
-                    Time   = tFile.Properties.Duration.Hours 
-                    + ":" + tFile.Properties.Duration.Minutes 
-                    + ":" + tFile.Properties.Duration.Seconds
+                    Time   = convertTime(tFile)
                 });
             }
 
-
+            container = container.OrderBy(x => x.Album).ToList();
             container.RemoveAll(x => x.Artist == null);
-            return container.ToArray();
 
-            //return Ok(queryFile.Count());
+            return container.ToArray();
         }
     }
 }
