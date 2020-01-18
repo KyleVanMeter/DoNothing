@@ -1,8 +1,6 @@
 ﻿import React, { Component } from 'react';
 
 export class DoNothing extends Component {
-
-
     constructor(props) {
         super(props);
 
@@ -72,7 +70,7 @@ export class DoNothing extends Component {
                     </table>
                 </div>
                 
-                <button className="btn btn-primary" onClick={this.populateData}>Re-send request</button>
+                <button className="btn btn-primary" onClick={() => { console.log("test") }}>Re-send request</button>
             </div>
         );
     }

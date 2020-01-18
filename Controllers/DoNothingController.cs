@@ -116,6 +116,20 @@ namespace test02.Controllers
                 new DoNothing { }
             };
 
+            DataAccessLayer data = new DataAccessLayer();
+            foreach(Album album in data.GetAllAlbums())
+            {
+                Console.WriteLine(album.AlbumTitle);
+                container.Add(new DoNothing
+                {
+                    Track = album.Tracks.Count.ToString(),
+                    Album = album.AlbumTitle,
+                    Artist = new String[] { album.AlbumArtist },
+                    Year = album.Year.ToString(),
+                    Time = "?"
+                });
+            }
+
             foreach(System.IO.FileInfo fi in queryMP3)
             {
                 var tFile = TagLib.File.Create(fi.FullName);
