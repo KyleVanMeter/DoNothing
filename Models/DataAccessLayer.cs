@@ -3,12 +3,58 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using TagLib;
+
 namespace test02.Models
 {
     public class DataAccessLayer
     {
         ThingContext db = new ThingContext();
 
+        public void AddFolder(string Folder)
+        {
+            System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(Folder);
+            IEnumerable<System.IO.FileInfo> fileList = dir.GetFiles("*.*", System.IO.SearchOption.AllDirectories);
+
+            var queryFile = from file in fileList select file;
+            var queryExt = from file in queryFile
+                           where file.Extension == ".mp3" || file.Extension == ".flac"
+                           orderby file.Name
+                           select file;
+
+            string temp = "";
+            List<Tracks> tempTrackList = new List<Tracks>();
+            foreach (System.IO.FileInfo fi in queryExt)
+            {
+                Console.WriteLine("At {0}", fi.FullName);
+                var tFile = TagLib.File.Create(fi.FullName);
+                if (temp != tFile.Tag.Album)
+                {
+                    temp = tFile.Tag.Album;
+                    AddAlbum(new Album
+                    {
+                        AlbumArtist = tFile.Tag.JoinedAlbumArtists,
+                        AlbumTitle = tFile.Tag.Album,
+                        Id = GetGreatestAlbumId() + 1,
+                        Year = (int)tFile.Tag.Year,
+                        Tracks = new List<Tracks>()
+                    });
+                } else
+                {
+                    int albumId = GetGreatestAlbumId();
+                    AddTrack(new Tracks
+                    {
+                        Id = GetGreatestTrackId() + 1,
+                        AlbumId = albumId,
+                        Disk = (int)tFile.Tag.Disc,
+                        TrackNumber = (int)tFile.Tag.Track,
+                        TrackTitle = tFile.Tag.Title,
+                        TrackArtist = tFile.Tag.FirstPerformer,
+                        Duration = (int)tFile.Properties.Duration.TotalSeconds
+                    });
+                }
+            }
+        }
         public IEnumerable<Album> GetAllAlbums()
         {
             try
@@ -119,6 +165,24 @@ namespace test02.Models
                             where Track.AlbumId == id select Track).ToList();
 
             return trackListing;
+        }
+
+        public int GetGreatestAlbumId()
+        {
+            var query = from alm in db.Album 
+                        orderby alm.Id 
+                        select alm.Id;
+            Console.WriteLine("Album id {0}", query.FirstOrDefault<int>());
+            return query.FirstOrDefault<int>();
+        }
+
+        public int GetGreatestTrackId()
+        {
+            var query = from trck in db.Tracks
+                        orderby trck.Id
+                        select trck.Id;
+            Console.WriteLine("Track id {0}", query.FirstOrDefault<int>());
+            return query.FirstOrDefault<int>();
         }
     }
 }
