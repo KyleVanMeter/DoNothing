@@ -30,6 +30,7 @@ namespace test02.Models
                 var tFile = TagLib.File.Create(fi.FullName);
                 if (temp != tFile.Tag.Album)
                 {
+                    Console.WriteLine("Updating Album to {0}, from {1}", tFile.Tag.Album, temp);
                     temp = tFile.Tag.Album;
                     AddAlbum(new Album
                     {
@@ -169,20 +170,31 @@ namespace test02.Models
 
         public int GetGreatestAlbumId()
         {
-            var query = from alm in db.Album 
-                        orderby alm.Id 
-                        select alm.Id;
-            Console.WriteLine("Album id {0}", query.FirstOrDefault<int>());
-            return query.FirstOrDefault<int>();
+            int? maxId = db.Album.Max(u => (int?)u.Id);
+
+            Console.WriteLine("Album id {0}", maxId);
+            if(maxId.HasValue)
+            {
+                return maxId.Value;
+            } else
+            {
+                return 0;
+            }
         }
 
         public int GetGreatestTrackId()
         {
-            var query = from trck in db.Tracks
-                        orderby trck.Id
-                        select trck.Id;
-            Console.WriteLine("Track id {0}", query.FirstOrDefault<int>());
-            return query.FirstOrDefault<int>();
+            int? maxId = db.Tracks.Max(u => (int?)u.Id);
+
+            Console.WriteLine("Track id {0}", maxId);
+
+            if(maxId.HasValue)
+            {
+                return maxId.Value;
+            } else
+            {
+                return 0;
+            }
         }
     }
 }

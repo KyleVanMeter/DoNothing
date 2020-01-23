@@ -117,7 +117,7 @@ namespace test02.Controllers
             };
 
             DataAccessLayer data = new DataAccessLayer();
-            data.AddFolder(@"E:\Music\Main\Rap\");
+            //data.AddFolder(@"E:\Music\Main\Rap\");
 
             foreach(Album album in data.GetAllAlbums())
             {
