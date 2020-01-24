@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Data.SqlClient;
 
 using TagLib;
 
@@ -28,7 +29,8 @@ namespace test02.Models
             {
                 Console.WriteLine("At {0}", fi.FullName);
                 var tFile = TagLib.File.Create(fi.FullName);
-                if (temp != tFile.Tag.Album)
+                var cond = db.Album.Where(t => t.AlbumTitle.Contains(tFile.Tag.Album));
+                if (!cond.Any())
                 {
                     Console.WriteLine("Updating Album to {0}, from {1}", tFile.Tag.Album, temp);
                     temp = tFile.Tag.Album;
@@ -40,9 +42,20 @@ namespace test02.Models
                         Year = (int)tFile.Tag.Year,
                         Tracks = new List<Tracks>()
                     });
+
+                    AddTrack(new Tracks
+                    {
+                        Id = GetGreatestTrackId() + 1,
+                        AlbumId = GetGreatestAlbumId(),
+                        Disk = (int)tFile.Tag.Disc,
+                        TrackNumber = (int)tFile.Tag.Track,
+                        TrackTitle = tFile.Tag.Title,
+                        TrackArtist = tFile.Tag.JoinedPerformers,
+                        Duration = (int)tFile.Properties.Duration.TotalSeconds
+                    });
                 } else
                 {
-                    int albumId = GetGreatestAlbumId();
+                    int albumId = cond.Select(t => t.Id).FirstOrDefault();
                     AddTrack(new Tracks
                     {
                         Id = GetGreatestTrackId() + 1,
@@ -50,7 +63,7 @@ namespace test02.Models
                         Disk = (int)tFile.Tag.Disc,
                         TrackNumber = (int)tFile.Tag.Track,
                         TrackTitle = tFile.Tag.Title,
-                        TrackArtist = tFile.Tag.FirstPerformer,
+                        TrackArtist = tFile.Tag.JoinedPerformers,
                         Duration = (int)tFile.Properties.Duration.TotalSeconds
                     });
                 }
@@ -172,7 +185,6 @@ namespace test02.Models
         {
             int? maxId = db.Album.Max(u => (int?)u.Id);
 
-            Console.WriteLine("Album id {0}", maxId);
             if(maxId.HasValue)
             {
                 return maxId.Value;
@@ -185,8 +197,6 @@ namespace test02.Models
         public int GetGreatestTrackId()
         {
             int? maxId = db.Tracks.Max(u => (int?)u.Id);
-
-            Console.WriteLine("Track id {0}", maxId);
 
             if(maxId.HasValue)
             {
