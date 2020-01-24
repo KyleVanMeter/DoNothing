@@ -130,10 +130,22 @@ namespace test02.Controllers
                     Year = album.Year.ToString(),
                     Time = "?"
                 });
+
+                foreach(Tracks track in data.GetTracksFromAlbum(album.Id))
+                {
+                    container.Add(new DoNothing
+                    {
+                        Track = track.Disk.ToString() + '.' + track.TrackNumber.ToString(),
+                        Album = track.TrackTitle,
+                        Artist = new String[] { track.TrackArtist },
+                        Year = track.Album.Year.ToString(),
+                        Time = track.Duration.ToString()
+                    });
+                }
             }
 
-            container = container.OrderBy(x => x.Album).ToList();
             container.RemoveAll(x => x.Artist == null);
+            container = container.OrderBy(x => x.Artist.First()).ToList();
 
             return container.ToArray();
         }
