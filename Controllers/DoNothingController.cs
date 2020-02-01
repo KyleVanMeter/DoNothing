@@ -32,14 +32,8 @@ namespace test02.Controllers
     {
         DataAccessLayer data = new DataAccessLayer();
 
-        [HttpGet("please")]
-        int test()
-        {
-            return 42;
-        }
-
         [HttpGet]
-        [Route("/test")]
+        [Route("api/Album/Index")]
         IEnumerable<Album> IAlbum.Index()
         {
             Console.WriteLine("In IAlbum Index");
