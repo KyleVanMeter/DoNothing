@@ -32,11 +32,18 @@ namespace test02.Controllers
     {
         DataAccessLayer data = new DataAccessLayer();
 
+        [HttpGet("please")]
+        int test()
+        {
+            return 42;
+        }
+
         [HttpGet]
-        [Route("api/Album/Index")]
+        [Route("/test")]
         IEnumerable<Album> IAlbum.Index()
         {
-            return data.GetAllAlbums();
+            Console.WriteLine("In IAlbum Index");
+            return data.GetAllAlbums().ToArray();
         }
 
         [HttpGet]
@@ -96,58 +103,42 @@ namespace test02.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<DoNothing> Get()
+        public IEnumerable<AlbumResponse> Get()
         {
-            string folder = @"E:\Music\Main\Bleep\";
-
-            System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(folder);
-            IEnumerable<System.IO.FileInfo> fileList = dir.GetFiles("*.*", System.IO.SearchOption.AllDirectories);
-
-            var queryFile = from file in fileList select file;
-            var queryMP3 = from file in queryFile 
-                           where file.Extension == ".mp3" 
-                           orderby file.Name select file;
-            var queryFLAC = from file in queryFile 
-                            where file.Extension == ".flac" 
-                            orderby file.Name select file;
-
-            List<DoNothing> container = new List<DoNothing>
-            {
-                new DoNothing { }
-            };
-
+            List<AlbumResponse> AlbumAgg = new List<AlbumResponse>();
             DataAccessLayer data = new DataAccessLayer();
-            data.AddFolder(@"E:\Music\Main\Rap\");
+            //data.AddFolder(@"E:\Music\Main\Rap\");
 
             foreach(Album album in data.GetAllAlbums())
             {
-                Console.WriteLine(album.AlbumTitle);
-                container.Add(new DoNothing
-                {
-                    Track = album.Tracks.Count.ToString(),
-                    Album = album.AlbumTitle,
-                    Artist = new String[] { album.AlbumArtist },
-                    Year = album.Year.ToString(),
-                    Time = "?"
-                });
+                List<Tracks> tracks = data.GetTracksFromAlbum(album.Id);
+                List<TrackResponse> trackResponses = new List<TrackResponse>();
 
-                foreach(Tracks track in data.GetTracksFromAlbum(album.Id))
+                foreach(Tracks track in tracks)
                 {
-                    container.Add(new DoNothing
+                    trackResponses.Add(new TrackResponse
                     {
-                        Track = track.Disk.ToString() + '.' + track.TrackNumber.ToString(),
-                        Album = track.TrackTitle,
-                        Artist = new String[] { track.TrackArtist },
-                        Year = track.Album.Year.ToString(),
-                        Time = track.Duration.ToString()
+                        Disk = track.Disk,
+                        TrackNumber = track.TrackNumber,
+                        TrackArtist = track.TrackArtist,
+                        TrackTitle = track.TrackTitle,
+                        Duration = track.Duration,
+                        Path = "N/A"
                     });
                 }
+
+                AlbumAgg.Add(new AlbumResponse
+                {
+                    AlbumName = album.AlbumTitle,
+                    Artists = album.AlbumArtist,
+                    Year = album.Year,
+                    Tracks = trackResponses
+                });
             }
 
-            container.RemoveAll(x => x.Artist == null);
-            container = container.OrderBy(x => x.Artist.First()).ToList();
+            AlbumAgg = AlbumAgg.OrderBy(x => x.Artists.First()).ToList();
 
-            return container.ToArray();
+            return AlbumAgg.ToArray();
         }
     }
 }
