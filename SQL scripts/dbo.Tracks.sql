@@ -7,6 +7,6 @@ CREATE TABLE [dbo].[Tracks]
 	[TrackNumber] INT NOT NULL,
 	[TrackTitle] VARCHAR(MAX) NOT NULL,
 	[TrackArtist] VARCHAR(MAX) NULL,
-	[Duration] INT NOT NULL,
+	[Duration] VARCHAR(MAX) NOT NULL,
 	[Path] VARCHAR(MAX) NOT NULL
 )

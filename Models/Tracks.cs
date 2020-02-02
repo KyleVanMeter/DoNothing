@@ -11,7 +11,7 @@ namespace test02.Models
         public int TrackNumber { get; set; }
         public string TrackTitle { get; set; }
         public string TrackArtist { get; set; }
-        public int Duration { get; set; }
+        public string Duration { get; set; }
         public string Path { get; set; }
 
         public virtual Album Album { get; set; }

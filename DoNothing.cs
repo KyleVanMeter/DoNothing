@@ -10,7 +10,7 @@ namespace test02
         public int TrackNumber { get; set; }
         public string TrackTitle { get; set; }
         public string TrackArtist { get; set; }
-        public int Duration { get; set; }
+        public string Duration { get; set; }
         public string Path { get; set; }
     }
     public class AlbumResponse

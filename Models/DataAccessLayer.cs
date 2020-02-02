@@ -12,6 +12,26 @@ namespace test02.Models
     {
         ThingContext db = new ThingContext();
 
+        private string ConvertTime(TimeSpan time)
+        {
+            string result;
+
+            if(time.Hours == 0)
+            {
+                result = time.Minutes + ":" + time.Seconds;
+            } else
+            {
+                result = time.Hours + ":" + time.Minutes + ":" + time.Seconds;
+            }
+
+            if(time.Seconds == 0)
+            {
+                result += '0';
+            }
+
+            return result;
+        }
+
         public void AddFolder(string Folder)
         {
             System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(Folder);
@@ -51,7 +71,7 @@ namespace test02.Models
                         TrackNumber = (int)tFile.Tag.Track,
                         TrackTitle = tFile.Tag.Title,
                         TrackArtist = tFile.Tag.JoinedPerformers,
-                        Duration = (int)tFile.Properties.Duration.TotalSeconds,
+                        Duration = ConvertTime(tFile.Properties.Duration),
                         Path = fi.FullName
                     });
                 } else
@@ -65,7 +85,7 @@ namespace test02.Models
                         TrackNumber = (int)tFile.Tag.Track,
                         TrackTitle = tFile.Tag.Title,
                         TrackArtist = tFile.Tag.JoinedPerformers,
-                        Duration = (int)tFile.Properties.Duration.TotalSeconds,
+                        Duration = ConvertTime(tFile.Properties.Duration),
                         Path = fi.FullName
                     });
                 }
