@@ -51,7 +51,8 @@ namespace test02.Models
                         TrackNumber = (int)tFile.Tag.Track,
                         TrackTitle = tFile.Tag.Title,
                         TrackArtist = tFile.Tag.JoinedPerformers,
-                        Duration = (int)tFile.Properties.Duration.TotalSeconds
+                        Duration = (int)tFile.Properties.Duration.TotalSeconds,
+                        Path = fi.FullName
                     });
                 } else
                 {
@@ -64,7 +65,8 @@ namespace test02.Models
                         TrackNumber = (int)tFile.Tag.Track,
                         TrackTitle = tFile.Tag.Title,
                         TrackArtist = tFile.Tag.JoinedPerformers,
-                        Duration = (int)tFile.Properties.Duration.TotalSeconds
+                        Duration = (int)tFile.Properties.Duration.TotalSeconds,
+                        Path = fi.FullName
                     });
                 }
             }

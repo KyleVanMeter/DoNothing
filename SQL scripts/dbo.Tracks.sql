@@ -1,4 +1,5 @@
-﻿CREATE TABLE [dbo].[Tracks]
+﻿DROP TABLE IF EXISTS Tracks;
+CREATE TABLE [dbo].[Tracks]
 (
 	[Id] INT NOT NULL PRIMARY KEY,
 	[AlbumId] INT FOREIGN KEY REFERENCES Album(Id),
@@ -6,5 +7,6 @@
 	[TrackNumber] INT NOT NULL,
 	[TrackTitle] VARCHAR(MAX) NOT NULL,
 	[TrackArtist] VARCHAR(MAX) NULL,
-	[Duration] INT NOT NULL
+	[Duration] INT NOT NULL,
+	[Path] VARCHAR(MAX) NOT NULL
 )

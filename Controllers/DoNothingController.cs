@@ -117,7 +117,7 @@ namespace test02.Controllers
                         TrackArtist = track.TrackArtist,
                         TrackTitle = track.TrackTitle,
                         Duration = track.Duration,
-                        Path = "N/A"
+                        Path = track.Path
                     });
                 }
 

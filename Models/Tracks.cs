@@ -12,6 +12,7 @@ namespace test02.Models
         public string TrackTitle { get; set; }
         public string TrackArtist { get; set; }
         public int Duration { get; set; }
+        public string Path { get; set; }
 
         public virtual Album Album { get; set; }
     }

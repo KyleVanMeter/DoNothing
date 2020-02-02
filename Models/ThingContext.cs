@@ -56,6 +56,8 @@ namespace test02.Models
                     .WithMany(p => p.Tracks)
                     .HasForeignKey(d => d.AlbumId)
                     .HasConstraintName("FK__Tracks__AlbumId__276EDEB3");
+
+                entity.Property(e => e.Path).IsRequired().IsUnicode(false);
             });
 
             OnModelCreatingPartial(modelBuilder);
