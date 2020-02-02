@@ -1,5 +1,14 @@
 ﻿import React, { Component } from 'react';
+import { Container, Row, Col, Table, Media } from 'reactstrap';
+import Placeholder from './temp.PNG';
+import './DoNothing.css'
 
+import "bootstrap/dist/css/bootstrap.css";
+
+const Box = props => <div className="box">{props.children} </div>;
+var ImgStyle = {
+    minWidth: "64px",
+};
 export class DoNothing extends Component {
     constructor(props) {
         super(props);
@@ -17,6 +26,41 @@ export class DoNothing extends Component {
                 ]
             }
         };
+    }
+
+    renderContainerHeader() {
+        return (
+            this.state.someFile.map((item, index) => {
+                return (
+                    <Container fluid={true} key={index}>
+                        <Row>
+                            <Col>
+                                <Box> <h1>{item['artists']} - {item['albumName']} ({item['year']}) </h1> </Box>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col xs="2">
+                                <Media left-href="#">
+                                    <Media style={ImgStyle} object src={Placeholder} />
+                                </Media>
+                            </Col>
+                            <Col>
+                                <Table hover striped dark borderless size="sm">
+                                    <tbody>
+                                        {item['tracks'].map((c, i) =>
+                                            <tr key={i}>
+                                                <td>{c['disk']}.{c['trackNumber']}</td>
+                                                <td>{c['trackArtist']}</td>
+                                                <td>{c['trackTitle']}</td>
+                                                <td align="right">{c['duration']}</td>
+                                            </tr>
+                                        )}
+                                    </tbody>
+                                </Table>
+                            </Col>
+                        </Row>
+                    </Container>)
+            }))
     }
 
     renderTable() {
@@ -52,25 +96,13 @@ export class DoNothing extends Component {
     }
 
     render() {
-        let tableBody = this.renderTable();
-        let tableHead = this.renderHead();
+        let test = this.renderContainerHeader();
+
         return (
             <div>
-                <h1>Hi!</h1>
-                <div>
-                    <table className="table table-hover table-sm table-borderless table-dark table-striped">
-                        <thead className="thead-light">
-                            <tr>
-                                {tableHead}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {tableBody}
-                        </tbody>
-                    </table>
-                </div>
-                
-                <button className="btn btn-primary" onClick={() => { console.log("test") }}>Re-send request</button>
+                <Container>
+                    {test}
+                </Container>            
             </div>
         );
     }
