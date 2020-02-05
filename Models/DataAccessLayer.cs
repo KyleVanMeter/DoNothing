@@ -15,18 +15,14 @@ namespace test02.Models
         private string ConvertTime(TimeSpan time)
         {
             string result;
+            string sec = time.Seconds <= 9 ? "0" + time.Seconds : time.Seconds.ToString();
 
             if(time.Hours == 0)
             {
-                result = time.Minutes + ":" + time.Seconds;
+                result = time.Minutes + ":" + sec;
             } else
             {
-                result = time.Hours + ":" + time.Minutes + ":" + time.Seconds;
-            }
-
-            if(time.Seconds == 0)
-            {
-                result += '0';
+                result = time.Hours + ":" + time.Minutes + ":" + sec;
             }
 
             return result;
@@ -34,15 +30,16 @@ namespace test02.Models
 
         public void AddFolder(string Folder)
         {
+            string[] extensions = new string[] { ".mp3", "flac", ".m4a", ".ape", ".wav", ".ogg", ".alac", ".aiff", ".aac" };
+
             System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(Folder);
             IEnumerable<System.IO.FileInfo> fileList = dir.GetFiles("*.*", System.IO.SearchOption.AllDirectories);
 
             var queryFile = from file in fileList select file;
             var queryExt = from file in queryFile
-                           where file.Extension == ".mp3" || file.Extension == ".flac"
+                           where extensions.Contains(file.Extension)
                            orderby file.Name
                            select file;
-
             string temp = "";
             List<Tracks> tempTrackList = new List<Tracks>();
             foreach (System.IO.FileInfo fi in queryExt)

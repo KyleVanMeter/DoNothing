@@ -50,7 +50,8 @@ namespace test02.Controllers
             }
 
             AlbumAgg = 
-                AlbumAgg.OrderBy(x => x.Artists.First()).ThenBy(x => x.Year).ToList();
+                AlbumAgg.OrderBy(x => x.Artists.ToUpper().First())
+                .ThenBy(x => x.Year).ToList();
 
             return AlbumAgg.ToArray();
         }
