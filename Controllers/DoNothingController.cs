@@ -49,7 +49,8 @@ namespace test02.Controllers
                 });
             }
 
-            AlbumAgg = AlbumAgg.OrderBy(x => x.Artists.First()).ToList();
+            AlbumAgg = 
+                AlbumAgg.OrderBy(x => x.Artists.First()).ThenBy(x => x.Year).ToList();
 
             return AlbumAgg.ToArray();
         }
