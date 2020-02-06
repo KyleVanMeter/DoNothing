@@ -1,9 +1,11 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 
+using SixLabors.ImageSharp;
 using TagLib;
 
 namespace test02.Models
@@ -27,7 +29,54 @@ namespace test02.Models
 
             return result;
         }
+        public string GetAlbumArt(string Folder)
+        {
+            System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(Folder);
+            if (dir.Exists)
+            {
+                string[] extensions = new string[] { ".jpg", ".jpeg", ".png", ".tiff", ".gif", ".bmp"};
+                IEnumerable<System.IO.FileInfo> fileList = dir.GetFiles("*.*", System.IO.SearchOption.AllDirectories);
 
+                var queryFile = from file in fileList select file;
+                var queryExt = from file in queryFile
+                               where extensions.Contains(file.Extension) 
+                               && Path.GetFileNameWithoutExtension(file.FullName).ToLower() == "cover"
+                               orderby file.Length
+                               select file;
+
+                if (queryExt.Any())
+                {
+                    return queryExt.First().FullName;
+                }
+            }
+
+            return null;
+        }
+        public string GetEmbedAlbumArt(TagLib.File file, string Folder)
+        {
+            string path = new FileInfo(Folder).Directory.Name;
+            path += "cover.png";
+            TagLib.IPicture[] pictures = file.Tag.Pictures;
+            if (pictures.Any())
+            {
+                throw new NotImplementedException();
+                /*TagLib.IPicture picture = pictures.First();
+                Image image = Image.Load(picture.Data.Data);
+
+                if (System.IO.File.Exists(path))
+                {
+                    System.IO.File.Delete(path);
+                }
+                using (FileStream fs = System.IO.File.Create(path))
+                {
+                    image.SaveAsPng(fs);
+                }
+
+                return path;*/
+            }
+
+            return null;
+        }
         public void AddFolder(string Folder)
         {
             string[] extensions = new string[] { ".mp3", "flac", ".m4a", ".ape", ".wav", ".ogg", ".alac", ".aiff", ".aac" };
@@ -51,13 +100,15 @@ namespace test02.Models
                 {
                     Console.WriteLine("Updating Album to {0}, from {1}", tFile.Tag.Album, temp);
                     temp = tFile.Tag.Album;
+                    
                     AddAlbum(new Album
                     {
                         AlbumArtist = tFile.Tag.JoinedAlbumArtists,
                         AlbumTitle = tFile.Tag.Album,
                         Id = GetGreatestAlbumId() + 1,
                         Year = (int)tFile.Tag.Year,
-                        Tracks = new List<Tracks>()
+                        Tracks = new List<Tracks>(),
+                        AlbumArtPath = GetAlbumArt(dir.FullName) ?? GetEmbedAlbumArt(tFile, dir.FullName)
                     });
 
                     AddTrack(new Tracks

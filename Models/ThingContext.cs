@@ -40,6 +40,8 @@ namespace test02.Models
                 entity.Property(e => e.AlbumTitle)
                     .IsRequired()
                     .IsUnicode(false);
+
+                entity.Property(e => e.AlbumArtPath).IsUnicode(false);
             });
 
             modelBuilder.Entity<Tracks>(entity =>

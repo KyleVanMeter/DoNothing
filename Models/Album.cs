@@ -14,6 +14,7 @@ namespace test02.Models
         public string AlbumTitle { get; set; }
         public string AlbumArtist { get; set; }
         public int Year { get; set; }
+        public string AlbumArtPath { get; set; }
 
         public virtual ICollection<Tracks> Tracks { get; set; }
     }
