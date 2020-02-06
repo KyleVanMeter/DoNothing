@@ -31,7 +31,9 @@ namespace test02.Models
         }
         public string GetAlbumArt(string Folder)
         {
+            Folder = Path.GetDirectoryName(Folder);
             System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(Folder);
+
             if (dir.Exists)
             {
                 string[] extensions = new string[] { ".jpg", ".jpeg", ".png", ".tiff", ".gif", ".bmp"};
@@ -54,12 +56,12 @@ namespace test02.Models
         }
         public string GetEmbedAlbumArt(TagLib.File file, string Folder)
         {
-            string path = new FileInfo(Folder).Directory.Name;
-            path += "cover.png";
+            string path = new FileInfo(Folder).DirectoryName;
+            path += @"\cover.png";
             TagLib.IPicture[] pictures = file.Tag.Pictures;
             if (pictures.Any())
             {
-                throw new NotImplementedException();
+                //throw new NotImplementedException();
                 /*TagLib.IPicture picture = pictures.First();
                 Image image = Image.Load(picture.Data.Data);
 
@@ -79,7 +81,7 @@ namespace test02.Models
         }
         public void AddFolder(string Folder)
         {
-            string[] extensions = new string[] { ".mp3", "flac", ".m4a", ".ape", ".wav", ".ogg", ".alac", ".aiff", ".aac" };
+            string[] extensions = new string[] { ".mp3", ".flac", ".m4a", ".ape", ".wav", ".ogg", ".alac", ".aiff", ".aac" };
 
             System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(Folder);
             IEnumerable<System.IO.FileInfo> fileList = dir.GetFiles("*.*", System.IO.SearchOption.AllDirectories);
@@ -108,7 +110,7 @@ namespace test02.Models
                         Id = GetGreatestAlbumId() + 1,
                         Year = (int)tFile.Tag.Year,
                         Tracks = new List<Tracks>(),
-                        AlbumArtPath = GetAlbumArt(dir.FullName) ?? GetEmbedAlbumArt(tFile, dir.FullName)
+                        AlbumArtPath = GetAlbumArt(fi.FullName) ?? GetEmbedAlbumArt(tFile, fi.FullName) ?? "N/A"
                     });
 
                     AddTrack(new Tracks

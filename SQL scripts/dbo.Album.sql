@@ -5,5 +5,5 @@ CREATE TABLE [dbo].[Album]
 	[AlbumTitle] VARCHAR(MAX) NOT NULL,
 	[AlbumArtist] VARCHAR(MAX) NOT NULL,
 	[Year] INT NOT NULL,
-	[AlbumArtPath] VARCHAR(MAX)
+	[AlbumArtPath] VARCHAR(MAX) NOT NULL
 )
