@@ -20,7 +20,7 @@ namespace test02.Controllers
         {
             List<AlbumResponse> AlbumAgg = new List<AlbumResponse>();
             DataAccessLayer data = new DataAccessLayer();
-            data.AddFolder(@"E:\Music\Main\Rap\");
+            //data.AddFolder(@"E:\Music\Main\Rap\");
 
             foreach(Album album in data.GetAllAlbums())
             {
@@ -45,6 +45,7 @@ namespace test02.Controllers
                     AlbumName = album.AlbumTitle,
                     Artists = album.AlbumArtist,
                     Year = album.Year,
+                    AlbumArtPath = album.AlbumArtPath,
                     Tracks = trackResponses
                 });
             }
