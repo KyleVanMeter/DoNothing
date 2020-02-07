@@ -32,6 +32,8 @@ export class DoNothing extends Component {
     renderContainerHeader() {
         return (
             this.state.someFile.map((item, index) => {
+                var imgPath = item['albumArtPath'].replace(/\\/g, '/').replace("E:/Music/Main", "");
+
                 return (
                     <Container fluid={true} key={index}>
                         <Row>
@@ -42,7 +44,7 @@ export class DoNothing extends Component {
                         <Row>
                             <Col xs="2">
                                 <Media left-href="#">
-                                    <Media style={ImgStyle} object src={ForeignTest} />
+                                    <Media style={ImgStyle} object src={"http://localhost:3000" + imgPath} />
                                 </Media>
                             </Col>
                             <Col>
@@ -62,34 +64,6 @@ export class DoNothing extends Component {
                         </Row>
                     </Container>)
             }))
-    }
-
-    renderTable() {
-        return (
-            this.state.someFile.map((item, index) => {
-                return (
-                    <tr key={index}>
-                        <td>{item['track']}</td>
-                        <td>{item['artist'].join(", ")}</td>
-                        <td>{item['album']}</td>
-                        <td>{item['year']}</td>
-                        <td align='right'>{item['time']}</td>
-                    </tr>
-                )
-            })
-        )
-    }
-
-    renderHead() {
-        return (
-            this.state.someData.headers.map((col, index) => {
-                if (index === this.state.someData.headers.length-1) {
-                    return <th key={index} colSpan="2">{col}</th>
-                } else {
-                    return <th key={index}>{col}</th>
-                }
-            })
-        )
     }
 
     componentDidMount() {
