@@ -25,15 +25,16 @@
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.11.1",
+    "react-app-rewired": "^2.1.5",
     "typescript": "^3.5.2"
   },
   "eslintConfig": {
     "extends": "react-app"
   },
   "scripts": {
-    "start": "rimraf ./build && react-scripts start",
-    "build": "react-scripts build",
-    "test": "cross-env CI=true react-scripts test --env=jsdom",
+    "start": "rimraf ./build && react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "cross-env CI=true react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject",
     "lint": "eslint ./src/"
   },

@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { Container, Row, Col, Table, Media } from 'reactstrap';
 import Placeholder from './temp.PNG';
+import ForeignTest from 'E:/Music/Main/Bleep/4 Hero - Combat Dancin\' (1990)/cover.jpg'
 import './DoNothing.css'
 
 import "bootstrap/dist/css/bootstrap.css";
@@ -41,7 +42,7 @@ export class DoNothing extends Component {
                         <Row>
                             <Col xs="2">
                                 <Media left-href="#">
-                                    <Media style={ImgStyle} object src={Placeholder} />
+                                    <Media style={ImgStyle} object src={ForeignTest} />
                                 </Media>
                             </Col>
                             <Col>
