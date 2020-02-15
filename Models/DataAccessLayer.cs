@@ -56,11 +56,13 @@ namespace test02.Models
         }
         public string GetEmbedAlbumArt(TagLib.File file, string Folder)
         {
+            Console.Write("Searching for embedded artwork... ");
             string path = new FileInfo(Folder).DirectoryName;
-            path += @"\cover.png";
+            string prePend = @"data:image/png;base64, ";
             TagLib.IPicture[] pictures = file.Tag.Pictures;
             if (pictures.Any())
             {
+                Console.WriteLine("Found!");
                 //throw new NotImplementedException();
                 /*TagLib.IPicture picture = pictures.First();
                 Image image = Image.Load(picture.Data.Data);
@@ -75,6 +77,13 @@ namespace test02.Models
                 }
 
                 return path;*/
+                TagLib.IPicture picture = pictures.First();
+                Image image = Image.Load(picture.Data.Data);
+                using (var outputStream = new MemoryStream())
+                {
+                    image.SaveAsPng(outputStream);
+                    return prePend + Convert.ToBase64String(outputStream.ToArray());
+                }
             }
 
             return null;
@@ -110,6 +119,7 @@ namespace test02.Models
                         Id = GetGreatestAlbumId() + 1,
                         Year = (int)tFile.Tag.Year,
                         Tracks = new List<Tracks>(),
+                        
                         AlbumArtPath = GetAlbumArt(fi.FullName) ?? GetEmbedAlbumArt(tFile, fi.FullName) ?? "N/A"
                     });
 

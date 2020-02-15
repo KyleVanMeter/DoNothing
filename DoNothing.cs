@@ -36,12 +36,14 @@ namespace test02
             Artists = album.AlbumArtist;
             Year = album.Year;
             AlbumArtPath = album.AlbumArtPath;
+            IsAlbumArtEmbedded = album.AlbumArtPath.StartsWith(@"data:image/png;base64, ");
             Tracks = album.Tracks.Select(x => new TrackResponse(x)).ToList();
         }
         public string AlbumName { get; set; }
         public string Artists { get; set; }
         public int Year { get; set; }
         public string AlbumArtPath { get; set; }
+        public bool IsAlbumArtEmbedded { get; set; }
         public List<TrackResponse> Tracks { get; set; }
     }
 

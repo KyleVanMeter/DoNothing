@@ -32,7 +32,11 @@ export class DoNothing extends Component {
     renderContainerHeader() {
         return (
             this.state.someFile.map((item, index) => {
-                var imgPath = item['albumArtPath'].replace(/\\/g, '/').replace("E:/Music/Main", "");
+                if (item['isAlbumArtEmbedded']) {
+                    var imgPath = item['albumArtPath'];
+                } else {
+                    var imgPath = "http://localhost:3000" + item['albumArtPath'].replace(/\\/g, '/').replace("E:/Music/Main", "");
+                }
 
                 return (
                     <Container fluid={true} key={index}>
@@ -44,7 +48,7 @@ export class DoNothing extends Component {
                         <Row>
                             <Col xs="2">
                                 <Media left-href="#">
-                                    <Media style={ImgStyle} object src={"http://localhost:3000" + imgPath} />
+                                    <Media style={ImgStyle} object src={imgPath} />
                                 </Media>
                             </Col>
                             <Col>
