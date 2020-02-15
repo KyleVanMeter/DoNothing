@@ -1,15 +1,14 @@
 ﻿import React, { Component } from 'react';
 import { Container, Row, Col, Table, Media } from 'reactstrap';
 import Placeholder from './temp.PNG';
-import ForeignTest from 'E:/Music/Main/Bleep/4 Hero - Combat Dancin\' (1990)/cover.jpg'
 import './DoNothing.css'
 
 import "bootstrap/dist/css/bootstrap.css";
 
-const Box = props => <div className="box">{props.children} </div>;
 var ImgStyle = {
     minWidth: "64px",
 };
+
 export class DoNothing extends Component {
     constructor(props) {
         super(props);
@@ -34,6 +33,8 @@ export class DoNothing extends Component {
             this.state.someFile.map((item, index) => {
                 if (item['isAlbumArtEmbedded']) {
                     var imgPath = item['albumArtPath'];
+                } else if (item['albumArtPath'] === 'N/A') {
+                    var imgPath = Placeholder;
                 } else {
                     var imgPath = "http://localhost:3000" + item['albumArtPath'].replace(/\\/g, '/').replace("E:/Music/Main", "");
                 }
@@ -42,7 +43,12 @@ export class DoNothing extends Component {
                     <Container fluid={true} key={index}>
                         <Row>
                             <Col>
-                                <Box> <h1>{item['artists']} - {item['albumName']} ({item['year']}) </h1> </Box>
+                                <div className="header">
+                                    <div className="header-text">
+                                        <h1 className="test">{item['artists']} - {item['albumName']} ({item['year']}) </h1>
+                                    </div>
+                                    <div className="divider"></div>
+                                </div>
                             </Col>
                         </Row>
                         <Row>
@@ -56,10 +62,10 @@ export class DoNothing extends Component {
                                     <tbody>
                                         {item['tracks'].map((c, i) =>
                                             <tr key={i}>
-                                                <td>{c['disk']}.{c['trackNumber']}</td>
-                                                <td>{c['trackArtist']}</td>
-                                                <td>{c['trackTitle']}</td>
-                                                <td align="right">{c['duration']}</td>
+                                                <td className="color1">{c['disk']}.{c['trackNumber']}</td>
+                                                <td className="color2">{c['trackArtist']}</td>
+                                                <td className="color3">{c['trackTitle']}</td>
+                                                <td className="color1" align="right">{c['duration']}</td>
                                             </tr>
                                         )}
                                     </tbody>
