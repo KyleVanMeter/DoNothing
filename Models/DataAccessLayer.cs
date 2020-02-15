@@ -63,20 +63,7 @@ namespace test02.Models
             if (pictures.Any())
             {
                 Console.WriteLine("Found!");
-                //throw new NotImplementedException();
-                /*TagLib.IPicture picture = pictures.First();
-                Image image = Image.Load(picture.Data.Data);
 
-                if (System.IO.File.Exists(path))
-                {
-                    System.IO.File.Delete(path);
-                }
-                using (FileStream fs = System.IO.File.Create(path))
-                {
-                    image.SaveAsPng(fs);
-                }
-
-                return path;*/
                 TagLib.IPicture picture = pictures.First();
                 Image image = Image.Load(picture.Data.Data);
                 using (var outputStream = new MemoryStream())
