@@ -62,9 +62,9 @@ export class DoNothing extends Component {
                                     <tbody>
                                         {item['tracks'].map((c, i) =>
                                             <tr key={i}>
-                                                <td className="color1">{c['disk']}.{c['trackNumber']}</td>
-                                                <td className="color2">{c['trackArtist']}</td>
-                                                <td className="color3">{c['trackTitle']}</td>
+                                                <td className="color1" align="left">{c['disk']}.{c['trackNumber']}</td>
+                                                <td className="color2" align="left">{c['trackArtist']}</td>
+                                                <td className="color3" align="left">{c['trackTitle']}</td>
                                                 <td className="color1" align="right">{c['duration']}</td>
                                             </tr>
                                         )}
@@ -84,20 +84,18 @@ export class DoNothing extends Component {
         let test = this.renderContainerHeader();
 
         return (
-            <div>
+            <div className="wrapper">
                 <Container className="newheader">
                     <h1> This will be the seekbar </h1>
                 </Container>
                 <Container>
-                    <Row>
-                        <Col>
-                            <h1> asdf </h1>
-                        </Col>
-                        <Col>
-                            {test}
-                        </Col>
-                    </Row>
-                </Container>            
+                    <div className="a">
+                        {test}
+                    </div>
+                </Container>
+                <div className="b">
+                    <h1> test </h1>
+                </div>
             </div>
         );
     }
