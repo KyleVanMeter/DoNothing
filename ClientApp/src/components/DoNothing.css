@@ -1,11 +1,30 @@
-﻿body {
+﻿/* TODO: css grid! */
+body, html {
+    height: 100vh;
+    min-height: 100vh;
+    width: 100vh;
+    min-width: 100vh;
+}
+
+body {
     background-color: #1e1e1e
+}
+
+html {
+    font-size: 12px;
 }
 
 .test {
     color: white;
 }
 
+.newheader {
+    background-color: #000000;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 20px;
+    z-index: 1;
+}
 .header {
     display: flex;
     flex-direction: row;

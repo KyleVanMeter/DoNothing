@@ -85,8 +85,18 @@ export class DoNothing extends Component {
 
         return (
             <div>
+                <Container className="newheader">
+                    <h1> This will be the seekbar </h1>
+                </Container>
                 <Container>
-                    {test}
+                    <Row>
+                        <Col>
+                            <h1> asdf </h1>
+                        </Col>
+                        <Col>
+                            {test}
+                        </Col>
+                    </Row>
                 </Container>            
             </div>
         );
