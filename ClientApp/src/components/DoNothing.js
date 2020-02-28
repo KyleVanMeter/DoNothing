@@ -31,6 +31,7 @@ export class DoNothing extends Component {
     renderContainerHeader() {
         return (
             this.state.someFile.map((item, index) => {
+                // Get either the correct file from the ImageCDN, or uses base64 encoded image if possible
                 if (item['isAlbumArtEmbedded']) {
                     var imgPath = item['albumArtPath'];
                 } else if (item['albumArtPath'] === 'N/A') {
@@ -40,7 +41,7 @@ export class DoNothing extends Component {
                 }
 
                 return (
-                    <Container fluid={true} key={index}>
+                    <Container fluid={true} key={index} className="albumItem">
                         <Row>
                             <Col>
                                 <div className="header">
@@ -85,16 +86,14 @@ export class DoNothing extends Component {
 
         return (
             <div className="wrapper">
-                <Container className="newheader">
+                <Container className="seekbar">
                     <h1> This will be the seekbar </h1>
                 </Container>
-                <Container>
-                    <div className="a">
-                        {test}
-                    </div>
+                <Container className="a">
+                    {test}
                 </Container>
                 <div className="b">
-                    <h1> test </h1>
+                    <h1> testaaaaaaaaaaaa </h1>
                 </div>
             </div>
         );

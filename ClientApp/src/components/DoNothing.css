@@ -1,21 +1,17 @@
-﻿/* TODO: css grid! */
-
-.wrapper {
-    display: grid;
-    grid-gap: 0px;
-    grid-row-gap: 20px;
-    grid-template-columns: [col1-start] auto [col2-start] auto [col2-end];
-    grid-template-rows: [row1-start] auto [row2-start];
+﻿.wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    outline: 1px solid blue;
 }
 
+.a, .b {
+    flex: 1 0 auto;
+    display: flex;
+    flex-flow: column nowrap;
+}
 .a {
-    grid-column: col1-start;
-    grid-row: row2-start;
-}
-
-.b {
-    grid-column: col2-start;
-    grid-row: row2-start;
+    width: 100vw;
 }
 
 body, html {
@@ -37,14 +33,14 @@ html {
     color: white;
 }
 
-.newheader {
+.seekbar, #a {
     background-color: #000000;
     position: -webkit-sticky;
     position: sticky;
-    top: 20px;
+    top: 0px;
     z-index: 1;
-    grid-column: col1-start / col2-end;
-    grid-row: row1-start;
+    display: flex;
+    width: 100vw;
 }
 .header {
     display: flex;
@@ -52,6 +48,9 @@ html {
     align-items: center;
 }
 
+.albumItem {
+    background-color: red;
+}
 .header-text {
     flex-grow: 0;
     color: #ebf1be
