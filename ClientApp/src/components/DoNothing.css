@@ -1,17 +1,30 @@
 ﻿.wrapper {
     display: flex;
     flex-direction: column;
-    height: 100%;
-    outline: 1px solid blue;
 }
 
-.a, .b {
-    flex: 1 0 auto;
-    display: flex;
-    flex-flow: column nowrap;
+.content {
+    flex: 1;
+    overflow-y: auto;
+    border: 1px solid blue;
+    width: 98vw;
 }
-.a {
-    width: 100vw;
+
+.wrapContent {
+    display: table;
+    width:100%;
+}
+
+.wrapContent > div {
+    display: table-cell;
+}
+
+.leftContent, .rightContent {
+    max-width: 200px;
+}
+
+.lrDivider {
+    border-left: 1px solid red;
 }
 
 body, html {
@@ -33,14 +46,14 @@ html {
     color: white;
 }
 
-.seekbar, #a {
+.seekbar, #leftContent {
     background-color: #000000;
     position: -webkit-sticky;
     position: sticky;
     top: 0px;
     z-index: 1;
     display: flex;
-    width: 100vw;
+    width: 98vw;
 }
 .header {
     display: flex;
@@ -48,9 +61,9 @@ html {
     align-items: center;
 }
 
-.albumItem {
-    background-color: red;
+.vertDiv {
 }
+
 .header-text {
     flex-grow: 0;
     color: #ebf1be

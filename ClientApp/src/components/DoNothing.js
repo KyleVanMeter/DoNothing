@@ -86,14 +86,19 @@ export class DoNothing extends Component {
 
         return (
             <div className="wrapper">
-                <Container className="seekbar">
-                    <h1> This will be the seekbar </h1>
-                </Container>
-                <Container className="a">
-                    {test}
-                </Container>
-                <div className="b">
-                    <h1> testaaaaaaaaaaaa </h1>
+                    <div className="seekbar">
+                        <h1> This will be the seekbar </h1>
+                    </div>
+                <div className="content">
+                    <div className="wrapContent">
+                        <div className="leftContent">
+                           {test}
+                        </div>
+                        <div className="lrDivider"> </div>
+                        <div className="rightContent">
+                            <Media style={ImgStyle} object src={Placeholder} />
+                        </div>
+                    </div>
                 </div>
             </div>
         );
