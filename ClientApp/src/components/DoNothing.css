@@ -22,15 +22,22 @@
 .leftContent, .rightContent {
     max-width: 200px;
 }
-
-
+.leftContent {
+    width: 69%;
+}
+.rightContent {
+    background-color: #000000;
+}
 
 .lrDivider {
     border-left: 1px solid red;
 }
 
-.upperContent {
+.udDivider {
     border-bottom: 1px solid green;
+}
+.upperContent {
+    text-align: center;
     min-height: 75%;
 }
 

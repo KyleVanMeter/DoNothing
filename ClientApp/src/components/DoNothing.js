@@ -9,13 +9,18 @@ var ImgStyle = {
     minWidth: "64px",
 };
 
+var ImgStyle2 = {
+    maxWidth: "100%",
+    maxHeight: "100%",
+};
+
 export class DoNothing extends Component {
     constructor(props) {
         super(props);
 
         this.populateData = this.populateData.bind(this);
         this.state = {
-            someImag: "",
+            someImag: Placeholder,
             someFile: [],
             someData: {
                 headers: [
@@ -107,7 +112,7 @@ export class DoNothing extends Component {
                         <div className="lrDivider"> </div>
                         <div className="rightContent">
                             <div className="upperContent">
-                                <Media style={ImgStyle} object src={currImage} />
+                                <Media style={ImgStyle2} object src={currImage} />
                             </div>
                             <div className="udDivider"> </div>
                             <div className="lowerContent">
