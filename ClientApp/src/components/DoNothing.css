@@ -5,7 +5,6 @@
 
 .content {
     flex: 1;
-    overflow-y: auto;
     border: 1px solid blue;
     width: 98vw;
 }
@@ -27,6 +26,9 @@
 }
 .rightContent {
     background-color: #000000;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0px;
 }
 
 .lrDivider {
@@ -35,9 +37,15 @@
 
 .udDivider {
     border-bottom: 1px solid green;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0px;
 }
 .upperContent {
     text-align: center;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 40px;
 }
 
 body, html {
