@@ -47,7 +47,8 @@ namespace test02.Controllers
                     Year = album.Year,
                     AlbumArtPath = album.AlbumArtPath,
                     IsAlbumArtEmbedded = album.AlbumArtPath.StartsWith(@"data:image/png;base64, "),
-                    Tracks = trackResponses
+                    Tracks = trackResponses,
+                    Id = album.Id
                 });
             }
 

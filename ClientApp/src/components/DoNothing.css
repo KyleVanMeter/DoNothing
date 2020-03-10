@@ -4,7 +4,6 @@
 }
 
 .content {
-    flex: 1;
     border: 1px solid blue;
     width: 98vw;
 }
@@ -38,14 +37,24 @@
 .udDivider {
     border-bottom: 1px solid green;
     position: sticky;
-    position: -webkit-sticky;
-    top: 0px;
+    top: auto;
 }
 .upperContent {
     text-align: center;
+    height: 62.5vh;
+    max-height: 62.5vh;
     position: sticky;
     position: -webkit-sticky;
     top: 40px;
+}
+
+.rightImage {
+    max-height: 100%;
+    max-width: 100%;
+    margin-bottom: auto;
+    margin-top: auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 body, html {

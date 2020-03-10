@@ -1,4 +1,5 @@
 ﻿import React, { Component } from 'react';
+import { ReactDOM } from 'react-dom';
 import { Container, Row, Col, Table, Media } from 'reactstrap';
 import Placeholder from './temp.PNG';
 
@@ -13,6 +14,7 @@ var ImgStyle = {
 var ImgStyle2 = {
     maxWidth: "100%",
     maxHeight: "100%",
+    objectFit: "cover",
 };
 
 export class DoNothing extends Component {
@@ -21,6 +23,13 @@ export class DoNothing extends Component {
 
         this.populateData = this.populateData.bind(this);
         this.state = {
+            playingInfo: {
+                isPlaying: false,
+                info: {
+                    albumID: -1,
+                    rowNum: -1
+                }
+            },
             someImag: Placeholder,
             someFile: [],
             someData: {
@@ -33,6 +42,41 @@ export class DoNothing extends Component {
                 ]
             }
         };
+    }
+
+    DblClickEvent = (key, id) => {
+        const elem = document.getElementById(id)
+
+        if (this.state.playingInfo['info']['albumID'] === id && this.state.playingInfo['info']['rowNum'] === key) {
+            this.setState({
+                playingInfo: {
+                    isPlaying: false,
+                    info: {
+                        albumID: -1,
+                        rowNum: -1,
+                    }
+                }
+            })
+            if (key % 2 == 0) {
+                elem.children[0].children[key].style.backgroundColor = '#292929'
+            } else {
+                elem.children[0].children[key].style.backgroundColor = '#1e1e1e'
+            }
+        } else {
+            this.setState({
+                playingInfo: {
+                    isPlaying: true,
+                    info: {
+                        albumID: id,
+                        rowNum: key,
+                    }
+                }
+            })
+            console.log(elem.children[0].children[key])
+            elem.children[0].children[key].style.backgroundColor = '#4b4750'
+        }
+        console.log(this.state.playingInfo)
+
     }
 
     renderContainerHeader() {
@@ -48,7 +92,6 @@ export class DoNothing extends Component {
                 }
 
                 const clickEvent = () => {
-                    console.log(imgPath);
                     this.setState({ someImag: imgPath });
                 }
 
@@ -74,10 +117,10 @@ export class DoNothing extends Component {
                                 </Media>
                             </Col>
                             <Col>
-                                <Table hover striped dark borderless size="sm" onClick={clickEvent}>
+                                <Table striped dark borderless size="sm" id={"Album".concat(item['id'].toString())} onClick={clickEvent}>
                                     <tbody>
                                         {item['tracks'].map((c, i) =>
-                                            <tr key={i}>
+                                            <tr key={i} onDoubleClick={() => this.DblClickEvent(i, "Album".concat(item['id'].toString()))}>
                                                 <td className="color1" align="left">{c['disk']}.{c['trackNumber']}</td>
                                                 <td className="color2" align="left">{c['trackArtist']}</td>
                                                 <td className="color3" align="left">{c['trackTitle']}</td>
@@ -113,13 +156,14 @@ export class DoNothing extends Component {
                         <div className="lrDivider"> </div>
                         <div className="rightContent">
                             <div className="upperContent">
-                                <Media style={ImgStyle2} object src={currImage} />
+                                <Media className="rightImage" object src={currImage} />
                             </div>
                             <div className="udDivider"> </div>
                             <div className="lowerContent">
                                 <div className="vizContent">
                                     <p> test </p>
                                     {this.state.someImag}
+                                    {this.state.playingInfo['info']['albumID']}
                                 </div>
                             </div>
                         </div>

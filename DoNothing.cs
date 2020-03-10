@@ -38,6 +38,7 @@ namespace test02
             AlbumArtPath = album.AlbumArtPath;
             IsAlbumArtEmbedded = album.AlbumArtPath.StartsWith(@"data:image/png;base64, ");
             Tracks = album.Tracks.Select(x => new TrackResponse(x)).ToList();
+            Id = album.Id;
         }
         public string AlbumName { get; set; }
         public string Artists { get; set; }
@@ -45,6 +46,7 @@ namespace test02
         public string AlbumArtPath { get; set; }
         public bool IsAlbumArtEmbedded { get; set; }
         public List<TrackResponse> Tracks { get; set; }
+        public int Id { get; set; }
     }
 
     public class DoNothing
