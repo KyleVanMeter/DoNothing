@@ -38,11 +38,6 @@
 }
 .upperContent {
     text-align: center;
-    min-height: 75%;
-}
-
-.lowerContent {
-    min-height: 25%;
 }
 
 body, html {
@@ -92,7 +87,9 @@ html {
     height: 2px;
     background-color: #e2e2e2;
 }
-
+.table {
+    background-color: #1e1e1e;
+}
 .color1 {
     color: #d0df0a;
 }

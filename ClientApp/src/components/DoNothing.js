@@ -1,9 +1,10 @@
-﻿import React, { Component, useState } from 'react';
+﻿import React, { Component } from 'react';
 import { Container, Row, Col, Table, Media } from 'reactstrap';
 import Placeholder from './temp.PNG';
-import './DoNothing.css'
 
 import "bootstrap/dist/css/bootstrap.css";
+import './DoNothing.css'
+
 
 var ImgStyle = {
     minWidth: "64px",
