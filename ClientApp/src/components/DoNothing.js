@@ -44,6 +44,17 @@ export class DoNothing extends Component {
         };
     }
 
+    DblClickHide = (id) => {
+        const elem = document.getElementById(id)
+        console.log(elem)
+        const child = elem.children[1]
+        if (child.style.display === 'none') {
+            child.style.display = ''
+        } else {
+            child.style.display = 'none'
+        }
+    }
+
     DblClickEvent = (key, id) => {
         const elem = document.getElementById(id)
 
@@ -96,11 +107,11 @@ export class DoNothing extends Component {
                 }
 
                 return (
-                    <Container fluid={true} key={index} className="albumItem" style={{
+                    <Container fluid={true} key={index} id={"Container" + index.toString()} className="albumItem" style={{
                         backgroundImage: 'url(' + imgPath + ')',
                         backgroundSize: 'cover',
                     }}>
-                        <Row>
+                        <Row onDoubleClick={() => this.DblClickHide("Container" + index.toString())}>
                             <Col>
                                 <div className="header">
                                     <div className="header-text">
