@@ -23,8 +23,19 @@
     max-width: 200px;
 }
 
+
+
 .lrDivider {
     border-left: 1px solid red;
+}
+
+.upperContent {
+    border-bottom: 1px solid green;
+    min-height: 75%;
+}
+
+.lowerContent {
+    min-height: 25%;
 }
 
 body, html {
@@ -61,7 +72,7 @@ html {
     align-items: center;
 }
 
-.vertDiv {
+.albumItem {
 }
 
 .header-text {

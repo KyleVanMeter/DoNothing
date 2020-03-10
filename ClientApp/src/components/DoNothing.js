@@ -1,4 +1,4 @@
-﻿import React, { Component } from 'react';
+﻿import React, { Component, useState } from 'react';
 import { Container, Row, Col, Table, Media } from 'reactstrap';
 import Placeholder from './temp.PNG';
 import './DoNothing.css'
@@ -15,7 +15,8 @@ export class DoNothing extends Component {
 
         this.populateData = this.populateData.bind(this);
         this.state = {
-            someNum: "", someFile: [],
+            someImag: "",
+            someFile: [],
             someData: {
                 headers: [
                     "Track #",
@@ -40,8 +41,16 @@ export class DoNothing extends Component {
                     var imgPath = "http://localhost:3000" + item['albumArtPath'].replace(/\\/g, '/').replace("E:/Music/Main", "");
                 }
 
+                const clickEvent = () => {
+                    console.log(imgPath);
+                    this.setState({ someImag: imgPath });
+                }
+
                 return (
-                    <Container fluid={true} key={index} className="albumItem">
+                    <Container fluid={true} key={index} className="albumItem" style={{
+                        backgroundImage: 'url(' + imgPath + ')',
+                        backgroundSize: 'cover',
+                    }}>
                         <Row>
                             <Col>
                                 <div className="header">
@@ -59,7 +68,7 @@ export class DoNothing extends Component {
                                 </Media>
                             </Col>
                             <Col>
-                                <Table hover striped dark borderless size="sm">
+                                <Table hover striped dark borderless size="sm" onClick={clickEvent}>
                                     <tbody>
                                         {item['tracks'].map((c, i) =>
                                             <tr key={i}>
@@ -82,7 +91,8 @@ export class DoNothing extends Component {
     }
 
     render() {
-        let test = this.renderContainerHeader();
+        let playList = this.renderContainerHeader();
+        let currImage = this.state.someImag;
 
         return (
             <div className="wrapper">
@@ -92,11 +102,20 @@ export class DoNothing extends Component {
                 <div className="content">
                     <div className="wrapContent">
                         <div className="leftContent">
-                           {test}
+                           {playList}
                         </div>
                         <div className="lrDivider"> </div>
                         <div className="rightContent">
-                            <Media style={ImgStyle} object src={Placeholder} />
+                            <div className="upperContent">
+                                <Media style={ImgStyle} object src={currImage} />
+                            </div>
+                            <div className="udDivider"> </div>
+                            <div className="lowerContent">
+                                <div className="vizContent">
+                                    <p> test </p>
+                                    {this.state.someImag}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
