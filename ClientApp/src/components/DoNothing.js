@@ -135,21 +135,24 @@ export class DoNothing extends Component {
                         </Row>
                         <Row>
                             <Col xs="2">
-                                <Media left-href="#">
+                                <Media>
                                     <Media style={ImgStyle} object src={imgPath} />
                                 </Media>
                             </Col>
                             <Col>
                                 <Table striped dark borderless size="sm" id={"Album".concat(item['id'].toString())} onClick={clickEvent}>
                                     <tbody>
-                                        {item['tracks'].map((c, i) =>
+                                        {item['tracks'].map((c, i) => {
+                                            const trackNum = (c['trackNumber'] < 10 ? "0" + c['trackNumber'].toString() : c['trackNumber']);
+                                            return (
                                             <tr key={i} onDoubleClick={() => this.DblClickEvent(i, "Album".concat(item['id'].toString()))}>
-                                                <td className="color1" align="left">{c['disk']}.{c['trackNumber']}</td>
+                                                <td className="color1" align="left">{c['disk']}.{trackNum}
+                                                </td>
                                                 <td className="color2" align="left">{c['trackArtist']}</td>
                                                 <td className="color3" align="left">{c['trackTitle']}</td>
                                                 <td className="color1" align="right">{c['duration']}</td>
-                                            </tr>
-                                        )}
+                                            </tr>)
+                                        })}
                                     </tbody>
                                 </Table>
                             </Col>
