@@ -1,5 +1,4 @@
 ﻿import React, { Component } from 'react';
-import { ReactDOM } from 'react-dom';
 import { Container, Row, Col, Table, Media } from 'reactstrap';
 import Placeholder from './temp.PNG';
 
@@ -9,12 +8,6 @@ import './DoNothing.css'
 
 var ImgStyle = {
     minWidth: "64px",
-};
-
-var ImgStyle2 = {
-    maxWidth: "100%",
-    maxHeight: "100%",
-    objectFit: "cover",
 };
 
 export class DoNothing extends Component {
@@ -68,7 +61,7 @@ export class DoNothing extends Component {
                     }
                 }
             })
-            if (key % 2 == 0) {
+            if (key % 2 === 0) {
                 elem.children[0].children[key].style.backgroundColor = '#292929'
             } else {
                 elem.children[0].children[key].style.backgroundColor = '#1e1e1e'
@@ -90,16 +83,35 @@ export class DoNothing extends Component {
 
     }
 
+    renderContainerSidebar() {
+        let currImage = this.state.someImag;
+
+        return (
+            <Col xs="1" className="rightItem">
+                <Row className="rTopContent">
+                    <div className="imageContainer">
+                        <Media className="rImage" object src={currImage} />
+                    </div>
+                </Row>
+                <Row className="rLowContent">
+                    <p> test </p>
+                    {this.state.someImag}
+                    {this.state.playingInfo['info']['albumID']}
+                </Row>
+            </Col>)
+    }
+
     renderContainerHeader() {
         return (
             this.state.someFile.map((item, index) => {
+                var imgPath;
                 // Get either the correct file from the ImageCDN, or uses base64 encoded image if possible
                 if (item['isAlbumArtEmbedded']) {
-                    var imgPath = item['albumArtPath'];
+                    imgPath = item['albumArtPath'];
                 } else if (item['albumArtPath'] === 'N/A') {
-                    var imgPath = Placeholder;
+                    imgPath = Placeholder;
                 } else {
-                    var imgPath = "http://localhost:3000" + item['albumArtPath'].replace(/\\/g, '/').replace("E:/Music/Main", "");
+                    imgPath = "http://localhost:3000" + item['albumArtPath'].replace(/\\/g, '/').replace("E:/Music/Main", "");
                 }
 
                 const clickEvent = () => {
@@ -152,7 +164,7 @@ export class DoNothing extends Component {
 
     render() {
         let playList = this.renderContainerHeader();
-        let currImage = this.state.someImag;
+        let rightImg = this.renderContainerSidebar();
 
         return (
             <div className="wrapper">
@@ -161,23 +173,16 @@ export class DoNothing extends Component {
                     </div>
                 <div className="content">
                     <div className="wrapContent">
-                        <div className="leftContent">
-                           {playList}
-                        </div>
-                        <div className="lrDivider"> </div>
-                        <div className="rightContent">
-                            <div className="upperContent">
-                                <Media className="rightImage" object src={currImage} />
-                            </div>
-                            <div className="udDivider"> </div>
-                            <div className="lowerContent">
-                                <div className="vizContent">
-                                    <p> test </p>
-                                    {this.state.someImag}
-                                    {this.state.playingInfo['info']['albumID']}
+                        <Container fluid={true} style={{ width: "100vw" }}>
+                            <Row>
+                                <Col xs="1" className="leftItem">
+                                    {playList}
+                                </Col>
+                                <div className="sticky-top">
+                                    {rightImg}
                                 </div>
-                            </div>
-                        </div>
+                            </Row>
+                        </Container>
                     </div>
                 </div>
             </div>

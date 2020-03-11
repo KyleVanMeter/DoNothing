@@ -17,46 +17,6 @@
     display: table-cell;
 }
 
-.leftContent, .rightContent {
-    max-width: 200px;
-}
-.leftContent {
-    width: 69%;
-}
-.rightContent {
-    background-color: #000000;
-    position: sticky;
-    position: -webkit-sticky;
-    top: 0px;
-}
-
-.lrDivider {
-    border-left: 1px solid red;
-}
-
-.udDivider {
-    border-bottom: 1px solid green;
-    position: sticky;
-    top: auto;
-}
-.upperContent {
-    text-align: center;
-    height: 62.5vh;
-    max-height: 62.5vh;
-    position: sticky;
-    position: -webkit-sticky;
-    top: 40px;
-}
-
-.rightImage {
-    max-height: 100%;
-    max-width: 100%;
-    margin-bottom: auto;
-    margin-top: auto;
-    margin-left: auto;
-    margin-right: auto;
-}
-
 body, html {
     height: 100vh;
     min-height: 100vh;
@@ -76,7 +36,7 @@ html {
     color: white;
 }
 
-.seekbar, #leftContent {
+.seekbar {
     background-color: #000000;
     position: -webkit-sticky;
     position: sticky;
@@ -85,13 +45,11 @@ html {
     display: flex;
     width: 98vw;
 }
+
 .header {
     display: flex;
     flex-direction: row;
     align-items: center;
-}
-
-.albumItem {
 }
 
 .header-text {
@@ -104,9 +62,11 @@ html {
     height: 2px;
     background-color: #e2e2e2;
 }
+
 .table {
     background-color: #1e1e1e;
 }
+
 .color1 {
     color: #d0df0a;
 }
@@ -117,4 +77,51 @@ html {
 
 .color3 {
     color: #ebddc5
+}
+
+.leftItem {
+    min-width: 69vw;
+    max-width: 69vw;
+}
+
+.rightItem {
+    background-color: #000000;
+    min-width: 28vw;
+    max-width: 28vw;
+    height: 100vh;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 40px;
+}
+
+.rTopContent {
+    position: sticky;
+    position: -webkit-sticky;   
+    justify-items: center;
+}
+
+.imageContainer {
+    position: sticky;
+    position: -webkit-sticky;
+    border: dashed 1px yellow;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 70vh;
+}
+
+.rImage {
+    position: sticky;
+    position: -webkit-sticky;
+    text-align: center;
+    vertical-align: central;
+    max-height: 100%;
+    height: auto;
+    max-width: 26vw;
+}
+
+.tLowContent {
+    height: 30vh;
+    position: sticky;
+    position: -webkit-sticky;
 }
