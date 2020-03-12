@@ -39,7 +39,7 @@ export class DoNothing extends Component {
 
     DblClickHide = (id) => {
         const elem = document.getElementById(id)
-        console.log(elem)
+    
         const child = elem.children[1]
         if (child.style.display === 'none') {
             child.style.display = ''
@@ -50,23 +50,11 @@ export class DoNothing extends Component {
 
     DblClickEvent = (key, id) => {
         const elem = document.getElementById(id)
+        const prevID = this.state.playingInfo['info']['albumID']
+        const prevKey = this.state.playingInfo['info']['rowNum']
 
-        if (this.state.playingInfo['info']['albumID'] === id && this.state.playingInfo['info']['rowNum'] === key) {
-            this.setState({
-                playingInfo: {
-                    isPlaying: false,
-                    info: {
-                        albumID: -1,
-                        rowNum: -1,
-                    }
-                }
-            })
-            if (key % 2 === 0) {
-                elem.children[0].children[key].style.backgroundColor = '#292929'
-            } else {
-                elem.children[0].children[key].style.backgroundColor = '#1e1e1e'
-            }
-        } else {
+        if (prevID === -1 && prevKey === -1) {
+            elem.children[0].children[key].style.backgroundColor = '#4b4750'
             this.setState({
                 playingInfo: {
                     isPlaying: true,
@@ -76,11 +64,41 @@ export class DoNothing extends Component {
                     }
                 }
             })
-            console.log(elem.children[0].children[key])
-            elem.children[0].children[key].style.backgroundColor = '#4b4750'
-        }
-        console.log(this.state.playingInfo)
+        } else if (prevID === id && prevKey === key) {
+            if (key % 2 === 0) {
+                elem.children[0].children[key].style.backgroundColor = '#292929'
+            } else {
+                elem.children[0].children[key].style.backgroundColor = '#1e1e1e'
+            }
 
+            this.setState({
+                playingInfo: {
+                    isPlaying: false,
+                    info: {
+                        albumID: -1,
+                        rowNum: -1,
+                    }
+                }
+            })
+        } else {
+            const prevElem = document.getElementById(prevID)
+            if (prevKey % 2 === 0) {
+                prevElem.children[0].children[prevKey].style.backgroundColor = '#292929'
+            } else {
+                prevElem.children[0].children[prevKey].style.backgroundColor = '#1e1e1e'
+            }
+
+            elem.children[0].children[key].style.backgroundColor = '#4b4750'
+            this.setState({
+                playingInfo: {
+                    isPlaying: true,
+                    info: {
+                        albumID: id,
+                        rowNum: key,
+                    }
+                }
+            })
+        }
     }
 
     renderContainerSidebar() {
@@ -146,8 +164,7 @@ export class DoNothing extends Component {
                                             const trackNum = (c['trackNumber'] < 10 ? "0" + c['trackNumber'].toString() : c['trackNumber']);
                                             return (
                                             <tr key={i} onDoubleClick={() => this.DblClickEvent(i, "Album".concat(item['id'].toString()))}>
-                                                <td className="color1" align="left">{c['disk']}.{trackNum}
-                                                </td>
+                                                <td className="color1" align="left">{c['disk']}.{trackNum}</td>
                                                 <td className="color2" align="left">{c['trackArtist']}</td>
                                                 <td className="color3" align="left">{c['trackTitle']}</td>
                                                 <td className="color1" align="right">{c['duration']}</td>
