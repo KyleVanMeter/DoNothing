@@ -5,10 +5,33 @@ import Placeholder from './temp.PNG';
 import "bootstrap/dist/css/bootstrap.css";
 import './DoNothing.css'
 
-
 var ImgStyle = {
     minWidth: "64px",
 };
+
+class AudioSeekbar extends Component {
+    render() {
+        return (
+            <div className="seekbar">
+                <h1> This will be the seekbar </h1>
+            </div>
+    )}
+}
+class AudioSpectrumViz extends Component {
+    render() {
+        return (
+            <h1> test </h1>
+    )}
+}
+
+class LargeCoverImage extends Component {
+    render() {
+        return (
+            <div className="imageContainer">
+                <Media className="rImage" object src={this.props.Image} />
+            </div>
+    )}
+}
 
 export class DoNothing extends Component {
     constructor(props) {
@@ -107,12 +130,10 @@ export class DoNothing extends Component {
         return (
             <Col xs="1" className="rightItem">
                 <Row className="rTopContent">
-                    <div className="imageContainer">
-                        <Media className="rImage" object src={currImage} />
-                    </div>
+                    <LargeCoverImage Image={currImage} />
                 </Row>
                 <Row className="rLowContent">
-                    <p> test </p>
+                    <AudioSpectrumViz />
                     {this.state.someImag}
                     {this.state.playingInfo['info']['albumID']}
                 </Row>
@@ -188,9 +209,7 @@ export class DoNothing extends Component {
 
         return (
             <div className="wrapper">
-                    <div className="seekbar">
-                        <h1> This will be the seekbar </h1>
-                    </div>
+                <AudioSeekbar />
                 <div className="content">
                     <div className="wrapContent">
                         <Container fluid={true} style={{ width: "100vw" }}>
