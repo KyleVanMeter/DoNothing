@@ -125,12 +125,10 @@ export class DoNothing extends Component {
     }
 
     renderContainerSidebar() {
-        let currImage = this.state.someImag;
-
         return (
             <Col xs="1" className="rightItem">
                 <Row className="rTopContent">
-                    <LargeCoverImage Image={currImage} />
+                    <LargeCoverImage Image={this.state.someImag} />
                 </Row>
                 <Row className="rLowContent">
                     <AudioSpectrumViz />
