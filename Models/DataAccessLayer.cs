@@ -32,9 +32,9 @@ namespace test02.Models
         }
         public string GetAlbumArt(string Folder)
         {
-            Folder = Path.GetDirectoryName(Folder);
             try
             {
+                Folder = Path.GetDirectoryName(Folder);
                 System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(Folder);
 
                 if (dir.Exists)
