@@ -33,27 +33,34 @@ namespace test02.Models
         public string GetAlbumArt(string Folder)
         {
             Folder = Path.GetDirectoryName(Folder);
-            System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(Folder);
-
-            if (dir.Exists)
+            try
             {
-                string[] extensions = new string[] { ".jpg", ".jpeg", ".png", ".tiff", ".gif", ".bmp"};
-                IEnumerable<System.IO.FileInfo> fileList = dir.GetFiles("*.*", System.IO.SearchOption.AllDirectories);
+                System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(Folder);
 
-                var queryFile = from file in fileList select file;
-                var queryExt = from file in queryFile
-                               where extensions.Contains(file.Extension) 
-                               && Path.GetFileNameWithoutExtension(file.FullName).ToLower() == "cover"
-                               orderby file.Length
-                               select file;
-
-                if (queryExt.Any())
+                if (dir.Exists)
                 {
-                    return queryExt.First().FullName;
-                }
-            }
+                    string[] extensions = new string[] { ".jpg", ".jpeg", ".png", ".tiff", ".gif", ".bmp" };
+                    IEnumerable<System.IO.FileInfo> fileList = dir.GetFiles("*.*", System.IO.SearchOption.AllDirectories);
 
-            return null;
+                    var queryFile = from file in fileList select file;
+                    var queryExt = from file in queryFile
+                                   where extensions.Contains(file.Extension)
+                                   && Path.GetFileNameWithoutExtension(file.FullName).ToLower() == "cover"
+                                   orderby file.Length
+                                   select file;
+
+                    if (queryExt.Any())
+                    {
+                        return queryExt.First().FullName;
+                    }
+                }
+
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
         }
         public string GetEmbedAlbumArt(TagLib.File file, string Folder)
         {
