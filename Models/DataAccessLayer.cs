@@ -14,7 +14,7 @@ namespace test02.Models
     {
         ThingContext db = new ThingContext();
 
-        private string ConvertTime(TimeSpan time)
+        public string ConvertTime(TimeSpan time)
         {
             string result;
             string sec = time.Seconds <= 9 ? "0" + time.Seconds : time.Seconds.ToString();
