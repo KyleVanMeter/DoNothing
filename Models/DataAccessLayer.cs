@@ -24,7 +24,8 @@ namespace test02.Models
                 result = time.Minutes + ":" + sec;
             } else
             {
-                result = time.Hours + ":" + time.Minutes + ":" + sec;
+                string min = time.Minutes <= 9 ? "0" + time.Minutes : time.Minutes.ToString();
+                result = time.Hours + ":" + min + ":" + sec;
             }
 
             return result;
