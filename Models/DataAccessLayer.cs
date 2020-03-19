@@ -46,7 +46,7 @@ namespace test02.Models
                     var queryExt = from file in queryFile
                                    where extensions.Contains(file.Extension)
                                    && Path.GetFileNameWithoutExtension(file.FullName).ToLower() == "cover"
-                                   orderby file.Length
+                                   orderby file.Length descending
                                    select file;
 
                     if (queryExt.Any())
