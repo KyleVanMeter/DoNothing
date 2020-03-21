@@ -14,6 +14,13 @@ namespace test02.Models
     {
         ThingContext db = new ThingContext();
 
+        /// <summary>
+        /// Converts a TimeSpan object into our final string representation
+        /// This string should have append a 0 to the seconds if it is less than 10,
+        /// or append a 0 to the minutes if there are 1 or more hours, and min < 10
+        /// </summary>
+        /// <param name="time"></param>
+        /// <returns>The string representation</returns>
         public string ConvertTime(TimeSpan time)
         {
             string result;
@@ -30,6 +37,14 @@ namespace test02.Models
 
             return result;
         }
+
+        /// <summary>
+        /// This method searchs the folder passed in for any files ending in
+        /// .jpg, .jpeg, .png, .gif, .tiff, .gif, .bmp with the file name cover
+        /// if multiple files are found then the largest file is selected
+        /// </summary>
+        /// <param name="Folder">The folder to search</param>
+        /// <returns>The path the album art file</returns>
         public string GetAlbumArt(string Folder)
         {
             try
