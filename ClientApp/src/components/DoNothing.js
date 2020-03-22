@@ -78,6 +78,13 @@ export class DoNothing extends Component {
 
         if (prevID === -1 && prevKey === -1) {
             elem.children[0].children[key].style.backgroundColor = '#4b4750'
+
+            this.state.someFile.forEach((element) => {
+                if (element['id'] === parseInt(id.replace("Album", ""))) {
+                    console.log(element['tracks'][key]['path'])
+                }
+            })
+
             this.setState({
                 playingInfo: {
                     isPlaying: true,
@@ -94,6 +101,8 @@ export class DoNothing extends Component {
                 elem.children[0].children[key].style.backgroundColor = '#1e1e1e'
             }
 
+
+            console.log("stop playing");
             this.setState({
                 playingInfo: {
                     isPlaying: false,
@@ -112,6 +121,19 @@ export class DoNothing extends Component {
             }
 
             elem.children[0].children[key].style.backgroundColor = '#4b4750'
+
+            this.state.someFile.forEach((element) => {
+                if (element['id'] === parseInt(prevID.replace("Album", ""))) {
+                    console.log("Old track:" + element['tracks'][prevKey]['path'])
+                }
+            })
+
+            this.state.someFile.forEach((element) => {
+                if (element['id'] === parseInt(id.replace("Album", ""))) {
+                    console.log(element['tracks'][key]['path'])
+                }
+            })
+
             this.setState({
                 playingInfo: {
                     isPlaying: true,
