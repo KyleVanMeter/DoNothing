@@ -29,6 +29,14 @@ namespace test02.Controllers
             return Ok(new TrackResponse(data.GetTrackById(id)));
         }
 
+        [HttpGet]
+        [Route("GetN/{id}/{trackNum}")]
+        public ActionResult<TrackResponse> GetN(int id, int trackNum)
+        {
+            return Ok(new TrackResponse(data.GetTracksFromAlbum(id).Where(x => 
+                                        (x.TrackNumber == trackNum)).FirstOrDefault()));
+        }
+
         [HttpPost]
         [Route("Add")]
         public void Add(Tracks track)
