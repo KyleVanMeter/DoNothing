@@ -26,15 +26,30 @@ namespace test02.Controllers
         [Route("Get/{id}")]
         public ActionResult<TrackResponse> Get(int id)
         {
-            return Ok(new TrackResponse(data.GetTrackById(id)));
+            try
+            {
+                return Ok(new TrackResponse(data.GetTrackById(id)));
+            } catch (Exception ex)
+            {
+                Console.WriteLine("Exception at TrackAPI Get with: " + ex.Message);
+                return new StatusCodeResult(404);
+            }
         }
 
         [HttpGet]
         [Route("GetN/{id}/{trackNum}")]
         public ActionResult<TrackResponse> GetN(int id, int trackNum)
         {
-            return Ok(new TrackResponse(data.GetTracksFromAlbum(id).Where(x => 
+            try
+            {
+                return Ok(new TrackResponse(data.GetTracksFromAlbum(id).Where(x =>
                                         (x.TrackNumber == trackNum)).FirstOrDefault()));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception at TrackAPI GetN with: " + ex.Message);
+                return new StatusCodeResult(404);
+            }
         }
 
         [HttpPost]
