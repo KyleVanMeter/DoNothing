@@ -26,7 +26,14 @@ namespace test02.Controllers
         [Route("Get/{id}")]
         public ActionResult<AlbumResponse> Get(int id)
         {
-            return Ok(new AlbumResponse(data.GetAlbumById(id)));
+            try
+            {
+                return Ok(new AlbumResponse(data.GetAlbumById(id)));
+            } catch (Exception ex)
+            {
+                Console.WriteLine("Exception at AlbumAPI Get with: " + ex.Message);
+                return new StatusCodeResult(404);
+            }
         }
 
         [HttpGet]
