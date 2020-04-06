@@ -232,3 +232,4 @@ _Pvt_Extensions
 .fake/
 /ClientApp/src/components/temp.PNG
 *.PNG
+*.mp3
