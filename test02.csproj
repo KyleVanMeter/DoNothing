@@ -35,8 +35,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\rca.env" />
     <None Remove="ClientApp\src\components\Counter.js" />
     <None Remove="ClientApp\src\components\FetchData.js" />
+    <None Remove="ClientApp\test.mp3" />
     <None Remove="foobar_colors.PNG" />
   </ItemGroup>
 

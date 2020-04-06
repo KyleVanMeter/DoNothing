@@ -1,5 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { Container, Row, Col, Table, Media } from 'reactstrap';
+import { Howl, Howler } from 'howler';
 import Placeholder from './temp.PNG';
 
 import "bootstrap/dist/css/bootstrap.css";
@@ -75,6 +76,12 @@ export class DoNothing extends Component {
         const elem = document.getElementById(id)
         const prevID = this.state.playingInfo['info']['albumID']
         const prevKey = this.state.playingInfo['info']['rowNum']
+
+        var sound = new Howl({
+            src: ['test.mp3', 'test.ogg'],
+            format: ['mp3', 'ogg']
+        });
+        sound.play();
 
         if (prevID === -1 && prevKey === -1) {
             elem.children[0].children[key].style.backgroundColor = '#4b4750'
@@ -226,6 +233,7 @@ export class DoNothing extends Component {
     render() {
         let playList = this.renderContainerHeader();
         let rightImg = this.renderContainerSidebar();
+
 
         return (
             <div className="wrapper">
