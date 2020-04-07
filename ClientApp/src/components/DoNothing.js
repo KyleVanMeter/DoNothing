@@ -18,6 +18,13 @@ class AudioSeekbar extends Component {
             </div>
     )}
 }
+
+class AudioPlayer extends Component {
+    render() {
+        return "1";
+    }
+}
+
 class AudioSpectrumViz extends Component {
     render() {
         return (
@@ -77,18 +84,23 @@ export class DoNothing extends Component {
         const prevID = this.state.playingInfo['info']['albumID']
         const prevKey = this.state.playingInfo['info']['rowNum']
 
-        var sound = new Howl({
-            src: ['test.mp3', 'test.ogg'],
-            format: ['mp3', 'ogg']
-        });
-        sound.play();
 
         if (prevID === -1 && prevKey === -1) {
             elem.children[0].children[key].style.backgroundColor = '#4b4750'
 
+            var str = "N/A";
             this.state.someFile.forEach((element) => {
                 if (element['id'] === parseInt(id.replace("Album", ""))) {
                     console.log(element['tracks'][key]['path'])
+                    str = 'http://localhost:3001'
+                        + element['tracks'][key]['path'].replace(/\\/g, '/').replace("E:/Music/Main", "");
+                    var sound = new Howl({
+                        src: str,
+                        html5: true,
+                        format: ['mp3']
+                    });
+                    sound.play();
+
                 }
             })
 
@@ -97,7 +109,7 @@ export class DoNothing extends Component {
                     isPlaying: true,
                     info: {
                         albumID: id,
-                        rowNum: key,
+                        rowNum: key
                     }
                 }
             })
@@ -185,10 +197,7 @@ export class DoNothing extends Component {
                 }
 
                 return (
-                    <Container fluid={true} key={index} id={"Container" + index.toString()} className="albumItem" style={{
-                        backgroundImage: 'url(' + imgPath + ')',
-                        backgroundSize: 'cover',
-                    }}>
+                    <Container fluid={true} key={index} id={"Container" + index.toString()} className="albumItem">
                         <Row onDoubleClick={() => this.DblClickHide("Container" + index.toString())}>
                             <Col>
                                 <div className="header">
@@ -212,6 +221,15 @@ export class DoNothing extends Component {
                                             const trackNum = (c['trackNumber'] < 10 ? "0" + c['trackNumber'].toString() : c['trackNumber']);
                                             return (
                                             <tr key={i} onDoubleClick={() => this.DblClickEvent(i, "Album".concat(item['id'].toString()))}>
+                                                <td style={{ width: "1%" }} align="left">
+                                                        {
+                                                            (this.state.playingInfo.isPlaying &&
+                                                             this.state.playingInfo.info.rowNum === i &&
+                                                             this.state.playingInfo.info.albumID === "Album".concat(item['id'].toString())) ?
+                                                                <AudioPlayer PlayerInfo={this.state.playingInfo} /> :
+                                                                null
+                                                        }
+                                                </td>
                                                 <td className="color1" align="left">{c['disk']}.{trackNum}</td>
                                                 <td className="color2" align="left">{c['trackArtist']}</td>
                                                 <td className="color3" align="left">{c['trackTitle']}</td>
