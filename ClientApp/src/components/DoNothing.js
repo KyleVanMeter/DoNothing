@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { Container, Row, Col, Table, Media } from 'reactstrap';
-import { Howl, Howler } from 'howler';
+import { Howl } from 'howler';
 import Placeholder from './temp.PNG';
 
 import "bootstrap/dist/css/bootstrap.css";
@@ -16,11 +16,21 @@ class AudioSeekbar extends Component {
             <div className="seekbar">
                 <h1> This will be the seekbar </h1>
             </div>
-    )}
+        )
+    }
 }
 
 class AudioPlayer extends Component {
     render() {
+        var str = 'http://localhost:3001'
+            + this.props.Path.replace(/\\/g, '/').replace("E:/Music/Main", "");
+        var sound = new Howl({
+            src: str,
+            html5: true,
+            format: ['mp3']
+        });
+        sound.play();
+        console.log(this.props.Path);
         return "1";
     }
 }
@@ -29,7 +39,8 @@ class AudioSpectrumViz extends Component {
     render() {
         return (
             <h1> test </h1>
-    )}
+        )
+    }
 }
 
 class LargeCoverImage extends Component {
@@ -38,7 +49,8 @@ class LargeCoverImage extends Component {
             <div className="imageContainer">
                 <Media className="rImage" object src={this.props.Image} />
             </div>
-    )}
+        )
+    }
 }
 
 export class DoNothing extends Component {
@@ -55,22 +67,13 @@ export class DoNothing extends Component {
                 }
             },
             someImag: Placeholder,
-            someFile: [],
-            someData: {
-                headers: [
-                    "Track #",
-                    "Artist",
-                    "Album",
-                    "Year",
-                    "Time"
-                ]
-            }
+            someFile: []
         };
     }
 
     DblClickHide = (id) => {
         const elem = document.getElementById(id)
-    
+
         const child = elem.children[1]
         if (child.style.display === 'none') {
             child.style.display = ''
@@ -88,18 +91,9 @@ export class DoNothing extends Component {
         if (prevID === -1 && prevKey === -1) {
             elem.children[0].children[key].style.backgroundColor = '#4b4750'
 
-            var str = "N/A";
             this.state.someFile.forEach((element) => {
                 if (element['id'] === parseInt(id.replace("Album", ""))) {
                     console.log(element['tracks'][key]['path'])
-                    str = 'http://localhost:3001'
-                        + element['tracks'][key]['path'].replace(/\\/g, '/').replace("E:/Music/Main", "");
-                    var sound = new Howl({
-                        src: str,
-                        html5: true,
-                        format: ['mp3']
-                    });
-                    sound.play();
 
                 }
             })
@@ -220,21 +214,21 @@ export class DoNothing extends Component {
                                         {item['tracks'].map((c, i) => {
                                             const trackNum = (c['trackNumber'] < 10 ? "0" + c['trackNumber'].toString() : c['trackNumber']);
                                             return (
-                                            <tr key={i} onDoubleClick={() => this.DblClickEvent(i, "Album".concat(item['id'].toString()))}>
-                                                <td style={{ width: "1%" }} align="left">
+                                                <tr key={i} onDoubleClick={() => this.DblClickEvent(i, "Album".concat(item['id'].toString()))}>
+                                                    <td style={{ width: "1%" }} align="left">
                                                         {
                                                             (this.state.playingInfo.isPlaying &&
-                                                             this.state.playingInfo.info.rowNum === i &&
-                                                             this.state.playingInfo.info.albumID === "Album".concat(item['id'].toString())) ?
-                                                                <AudioPlayer PlayerInfo={this.state.playingInfo} /> :
+                                                                this.state.playingInfo.info.rowNum === i &&
+                                                                this.state.playingInfo.info.albumID === "Album".concat(item['id'].toString())) ?
+                                                                <AudioPlayer Path={c['path']} PlayerInfo={this.state.playingInfo} /> :
                                                                 null
                                                         }
-                                                </td>
-                                                <td className="color1" align="left">{c['disk']}.{trackNum}</td>
-                                                <td className="color2" align="left">{c['trackArtist']}</td>
-                                                <td className="color3" align="left">{c['trackTitle']}</td>
-                                                <td className="color1" align="right">{c['duration']}</td>
-                                            </tr>)
+                                                    </td>
+                                                    <td className="color1" align="left">{c['disk']}.{trackNum}</td>
+                                                    <td className="color2" align="left">{c['trackArtist']}</td>
+                                                    <td className="color3" align="left">{c['trackTitle']}</td>
+                                                    <td className="color1" align="right">{c['duration']}</td>
+                                                </tr>)
                                         })}
                                     </tbody>
                                 </Table>
@@ -277,6 +271,6 @@ export class DoNothing extends Component {
     async populateData() {
         const resp = await fetch('donothing');
         const data = await resp.json();
-        this.setState({someFile: data})
+        this.setState({ someFile: data })
     }
 }
