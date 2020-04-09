@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { Container, Row, Col, Table, Media } from 'reactstrap';
-import { Howl } from 'howler';
+import AudioPlayerInstance from './AudioPlayer';
 import Placeholder from './temp.PNG';
 
 import "bootstrap/dist/css/bootstrap.css";
@@ -17,21 +17,6 @@ class AudioSeekbar extends Component {
                 <h1> This will be the seekbar </h1>
             </div>
         )
-    }
-}
-
-class AudioPlayer extends Component {
-    render() {
-        var str = 'http://localhost:3001'
-            + this.props.Path.replace(/\\/g, '/').replace("E:/Music/Main", "");
-        var sound = new Howl({
-            src: str,
-            html5: true,
-            format: ['mp3']
-        });
-        sound.play();
-        console.log(this.props.Path);
-        return "1";
     }
 }
 
@@ -87,14 +72,12 @@ export class DoNothing extends Component {
         const prevID = this.state.playingInfo['info']['albumID']
         const prevKey = this.state.playingInfo['info']['rowNum']
 
-
         if (prevID === -1 && prevKey === -1) {
             elem.children[0].children[key].style.backgroundColor = '#4b4750'
 
             this.state.someFile.forEach((element) => {
                 if (element['id'] === parseInt(id.replace("Album", ""))) {
-                    console.log(element['tracks'][key]['path'])
-
+                    AudioPlayerInstance.play(element['tracks'][key]['path']);
                 }
             })
 
@@ -114,8 +97,7 @@ export class DoNothing extends Component {
                 elem.children[0].children[key].style.backgroundColor = '#1e1e1e'
             }
 
-
-            console.log("stop playing");
+            AudioPlayerInstance.stop();
             this.setState({
                 playingInfo: {
                     isPlaying: false,
@@ -136,14 +118,8 @@ export class DoNothing extends Component {
             elem.children[0].children[key].style.backgroundColor = '#4b4750'
 
             this.state.someFile.forEach((element) => {
-                if (element['id'] === parseInt(prevID.replace("Album", ""))) {
-                    console.log("Old track:" + element['tracks'][prevKey]['path'])
-                }
-            })
-
-            this.state.someFile.forEach((element) => {
                 if (element['id'] === parseInt(id.replace("Album", ""))) {
-                    console.log(element['tracks'][key]['path'])
+                    AudioPlayerInstance.play(element['tracks'][key]['path'])
                 }
             })
 
@@ -220,8 +196,7 @@ export class DoNothing extends Component {
                                                             (this.state.playingInfo.isPlaying &&
                                                                 this.state.playingInfo.info.rowNum === i &&
                                                                 this.state.playingInfo.info.albumID === "Album".concat(item['id'].toString())) ?
-                                                                <AudioPlayer Path={c['path']} PlayerInfo={this.state.playingInfo} /> :
-                                                                null
+                                                                "►" : null
                                                         }
                                                     </td>
                                                     <td className="color1" align="left">{c['disk']}.{trackNum}</td>
