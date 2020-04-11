@@ -22,24 +22,45 @@ class AudioSeekbar extends Component {
 
 class AudioSpectrumViz extends Component {
     componentDidMount() {
-        const canvas = this.refs.canvas;
+        const canvas = this.refs.canvasRef;
         const ctx = canvas.getContext("2d");
-        ctx.fillStyle = 'green';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-    }
+        //ctx.fillStyle = 'green';
+        //ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    render() {
         var analyser = AudioPlayerInstance.getAnalyser();
         analyser.fftSize = 256;
 
         var data = new Uint8Array(analyser.frequencyBinCount);
 
-        setInterval(() => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        function draw() {
+            var viz = requestAnimationFrame(draw);
             analyser.getByteFrequencyData(data);
-            console.log(data);
-        }, 1000);
+
+            ctx.fillStyle = 'rgb(0,0,0)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            var barW = (canvas.width / data.length) * 2.5;
+            var barH;
+            var x = 0;
+
+            for (var i = 0; i < data.length; i++) {
+                barH = data[i] / 2;
+
+                ctx.fillStyle = 'rgb(' + (barH + 100) + ',50,50)';
+                ctx.fillRect(x, canvas.height - barH / 2, barW, barH);
+
+                x += barW + 1;
+            }
+        };
+
+        draw();
+    }
+
+    render() {
         return (
-            <canvas ref="canvas" id="AudioSpectrumViz"></canvas>
+            <canvas ref="canvasRef" id="AudioSpectrumViz"></canvas>
         )
     }
 }
