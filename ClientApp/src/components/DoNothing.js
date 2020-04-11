@@ -21,9 +21,25 @@ class AudioSeekbar extends Component {
 }
 
 class AudioSpectrumViz extends Component {
+    componentDidMount() {
+        const canvas = this.refs.canvas;
+        const ctx = canvas.getContext("2d");
+        ctx.fillStyle = 'green';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
     render() {
+        var analyser = AudioPlayerInstance.getAnalyser();
+        analyser.fftSize = 256;
+
+        var data = new Uint8Array(analyser.frequencyBinCount);
+
+        setInterval(() => {
+            analyser.getByteFrequencyData(data);
+            console.log(data);
+        }, 1000);
         return (
-            <h1> test </h1>
+            <canvas ref="canvas" id="AudioSpectrumViz"></canvas>
         )
     }
 }
@@ -142,9 +158,11 @@ export class DoNothing extends Component {
                     <LargeCoverImage Image={this.state.someImag} />
                 </Row>
                 <Row className="rLowContent">
-                    <AudioSpectrumViz />
-                    {this.state.someImag}
-                    {this.state.playingInfo['info']['albumID']}
+                    {
+                        this.state.playingInfo.isPlaying ?
+                            <AudioSpectrumViz /> :
+                            <canvas></canvas>
+                    }
                 </Row>
             </Col>)
     }
