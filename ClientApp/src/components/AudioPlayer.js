@@ -1,4 +1,4 @@
-import { Howl } from 'howler'
+import { Howl, Howler } from 'howler'
 import { audioExt } from '../util/Extensions'
 
 const _initstate = {
@@ -26,6 +26,14 @@ class AudioPlayer {
         return this._state;
     }
 
+    getAnalyser() {
+        var analyser = Howler.ctx.createAnalyser();
+        Howler.masterGain.connect(analyser);
+        analyser.connect(Howler.ctx.destination);
+
+        return analyser;
+    }
+
     setState(state) {
         this._state = state;
     }
@@ -41,13 +49,14 @@ class AudioPlayer {
             this._howl.unload();
         }
 
-        var str = 'http://localhost:3001'
+        this._state.sourceURL = 'https://localhost:3001'
             + url.replace(/\\/g, '/').replace("E:/Music/Main", "");
         this._howl = new Howl({
-            src: str,
-            html5: true,
+            src: this._state.sourceURL,
+            html5: false,
             format: Array.from(audioExt)
         });
+
         this._howl.play();
     }
 }
