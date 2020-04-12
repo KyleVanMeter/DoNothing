@@ -4,8 +4,14 @@
 }
 
 .content {
-    border: 1px solid blue;
     width: 98vw;
+}
+
+.rLowContent {
+    width: 28vw;
+    height: 27vh;
+    position: relative;
+    border: 1px solid blue;
 }
 
 .wrapContent {

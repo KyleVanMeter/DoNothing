@@ -24,8 +24,11 @@ class AudioSpectrumViz extends Component {
     componentDidMount() {
         const canvas = this.refs.canvasRef;
         const ctx = canvas.getContext("2d");
-        //ctx.fillStyle = 'green';
-        //ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        canvas.style.width = '100%';
+        canvas.style.height = '100%';
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight
 
         var analyser = AudioPlayerInstance.getAnalyser();
         analyser.fftSize = 256;
