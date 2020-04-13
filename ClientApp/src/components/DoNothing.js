@@ -21,8 +21,14 @@ class AudioSeekbar extends Component {
 }
 
 class AudioSpectrumViz extends Component {
+    constructor(props) {
+        super(props);
+
+        this.canvasRef = React.createRef();
+    }
+
     componentDidMount() {
-        const canvas = this.refs.canvasRef;
+        const canvas = this.canvasRef.current;
         const ctx = canvas.getContext("2d");
 
         canvas.style.width = '100%';
@@ -63,7 +69,7 @@ class AudioSpectrumViz extends Component {
 
     render() {
         return (
-            <canvas ref="canvasRef" id="AudioSpectrumViz"></canvas>
+            <canvas ref={this.canvasRef} id="AudioSpectrumViz"></canvas>
         )
     }
 }
