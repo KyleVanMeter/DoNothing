@@ -117,6 +117,7 @@ export class DoNothing extends Component {
         const elem = document.getElementById(id)
         const prevID = this.state.playingInfo['info']['albumID']
         const prevKey = this.state.playingInfo['info']['rowNum']
+        var state;
 
         if (prevID === -1 && prevKey === -1) {
             elem.children[0].children[key].style.backgroundColor = '#4b4750'
@@ -127,7 +128,7 @@ export class DoNothing extends Component {
                 }
             })
 
-            this.setState({
+            state = {
                 playingInfo: {
                     isPlaying: true,
                     info: {
@@ -135,7 +136,10 @@ export class DoNothing extends Component {
                         rowNum: key
                     }
                 }
-            })
+            }
+            this.setState(state)
+            AudioPlayerInstance.setState(state);
+
         } else if (prevID === id && prevKey === key) {
             if (key % 2 === 0) {
                 elem.children[0].children[key].style.backgroundColor = '#292929'
@@ -144,7 +148,7 @@ export class DoNothing extends Component {
             }
 
             AudioPlayerInstance.stop();
-            this.setState({
+            state = {
                 playingInfo: {
                     isPlaying: false,
                     info: {
@@ -152,7 +156,10 @@ export class DoNothing extends Component {
                         rowNum: -1,
                     }
                 }
-            })
+            }
+            this.setState(state);
+            AudioPlayerInstance.setState(state);
+
         } else {
             const prevElem = document.getElementById(prevID)
             if (prevKey % 2 === 0) {
@@ -169,7 +176,7 @@ export class DoNothing extends Component {
                 }
             })
 
-            this.setState({
+            state = {
                 playingInfo: {
                     isPlaying: true,
                     info: {
@@ -177,7 +184,10 @@ export class DoNothing extends Component {
                         rowNum: key,
                     }
                 }
-            })
+            }
+            this.setState(state);
+            AudioPlayerInstance.setState(state);
+
         }
     }
 

@@ -109,7 +109,6 @@ html {
 .imageContainer {
     position: sticky;
     position: -webkit-sticky;
-    border: dashed 1px yellow;
     display: flex;
     align-items: center;
     justify-content: center;
