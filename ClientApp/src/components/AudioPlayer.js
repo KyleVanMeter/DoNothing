@@ -46,6 +46,7 @@ class AudioPlayer {
             const nextElem = document.getElementById(this._state.playingInfo.info.albumID);
             const elemArr = Array.from(nextElem.rows);
 
+            var broke = false;
             let row;
             for (row of elemArr) {
                 // Each row in the playlist has a column that is of the form 'disk#'.'track#'
@@ -58,13 +59,17 @@ class AudioPlayer {
                         { 'bubbles': true }
                     ));
 
+                    broke = true;
                     break;
                 }
             }
-            row.dispatchEvent(new Event(
-                'dblclick',
-                { 'bubbles': true }
-            ));
+
+            if (!broke) {
+                row.dispatchEvent(new Event(
+                    'dblclick',
+                    { 'bubbles': true }
+                ));
+            }
         }
     }
 

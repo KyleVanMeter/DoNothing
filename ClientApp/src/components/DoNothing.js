@@ -122,12 +122,6 @@ export class DoNothing extends Component {
         if (prevID === -1 && prevKey === -1) {
             elem.children[0].children[key].style.backgroundColor = '#4b4750'
 
-            this.state.someFile.forEach((element) => {
-                if (element['id'] === parseInt(id.replace("Album", ""))) {
-                    AudioPlayerInstance.play(element['tracks'][key]['path']);
-                }
-            })
-
             state = {
                 playingInfo: {
                     isPlaying: true,
@@ -137,8 +131,15 @@ export class DoNothing extends Component {
                     }
                 }
             }
+
+            this.state.someFile.forEach((element) => {
+                if (element['id'] === parseInt(id.replace("Album", ""))) {
+                    AudioPlayerInstance.play(element['tracks'][key]['path']);
+                    AudioPlayerInstance.setState(state);
+                }
+            })
+
             this.setState(state)
-            AudioPlayerInstance.setState(state);
 
         } else if (prevID === id && prevKey === key) {
             if (key % 2 === 0) {
@@ -157,6 +158,7 @@ export class DoNothing extends Component {
                     }
                 }
             }
+
             this.setState(state);
             AudioPlayerInstance.setState(state);
 
@@ -170,12 +172,6 @@ export class DoNothing extends Component {
 
             elem.children[0].children[key].style.backgroundColor = '#4b4750'
 
-            this.state.someFile.forEach((element) => {
-                if (element['id'] === parseInt(id.replace("Album", ""))) {
-                    AudioPlayerInstance.play(element['tracks'][key]['path'])
-                }
-            })
-
             state = {
                 playingInfo: {
                     isPlaying: true,
@@ -185,9 +181,15 @@ export class DoNothing extends Component {
                     }
                 }
             }
-            this.setState(state);
-            AudioPlayerInstance.setState(state);
 
+            this.state.someFile.forEach((element) => {
+                if (element['id'] === parseInt(id.replace("Album", ""))) {
+                    AudioPlayerInstance.play(element['tracks'][key]['path'])
+                    AudioPlayerInstance.setState(state);
+                }
+            })
+
+            this.setState(state);
         }
     }
 
