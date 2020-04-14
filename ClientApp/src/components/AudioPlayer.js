@@ -49,11 +49,7 @@ class AudioPlayer {
             var broke = false;
             let row;
             for (row of elemArr) {
-                // Each row in the playlist has a column that is of the form 'disk#'.'track#'
-                // trackNumber converts that into an integer (ignoring disk number)
-                var trackNumber = row.cells[1].innerHTML.split('.').map(c => parseInt(c))[1];
-
-                if (trackNumber > this._state.playingInfo.info.rowNum + 1) {
+                if (row.rowIndex > this._state.playingInfo.info.rowNum) {
                     row.dispatchEvent(new Event(
                         'dblclick',
                         { 'bubbles': true }
@@ -65,6 +61,8 @@ class AudioPlayer {
             }
 
             if (!broke) {
+                // Default case at end of album.  Send dblclick to current playing track
+                // sets to 'not playing' state
                 row.dispatchEvent(new Event(
                     'dblclick',
                     { 'bubbles': true }
