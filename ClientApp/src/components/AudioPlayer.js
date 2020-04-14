@@ -84,7 +84,7 @@ class AudioPlayer {
         this._howl = new Howl({
             src: this._state.sourceURL,
             html5: false,
-            format: Array.from(audioExt),
+            format: Array.from(audioExt)
         });
 
         this._howl.on('end', () => { this.nextTrack() });
