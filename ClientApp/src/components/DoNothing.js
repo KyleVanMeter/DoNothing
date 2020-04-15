@@ -94,8 +94,22 @@ const CurrentTime = () => {
         return () => clearInterval(interval);
     }, []);
 
+    const getTimeString = (sec) => {
+        if (!(sec > 0)) {
+            return "00:00:00";
+        }
+
+        return [
+            parseInt(sec / 60 / 60),
+            parseInt(sec / 60 % 60),
+            parseInt(sec % 60)
+        ]
+            .join(":")
+            .replace(/\b(\d)\b/g, "0$1");
+    }
+
     return (
-        <>{seconds + " / "}</>
+        <>{getTimeString(seconds) + " / "}</>
     );
 };
 
