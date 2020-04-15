@@ -1,10 +1,10 @@
-﻿import React, { Component } from 'react';
+﻿import React, { Component, useState, useEffect } from 'react';
 import { Container, Row, Col, Table, Media } from 'reactstrap';
 import AudioPlayerInstance from './AudioPlayer';
 import Placeholder from './temp.PNG';
-
 import "bootstrap/dist/css/bootstrap.css";
 import './DoNothing.css'
+const moment = require('moment');
 
 var ImgStyle = {
     minWidth: "64px",
@@ -83,6 +83,21 @@ class LargeCoverImage extends Component {
         )
     }
 }
+
+const CurrentTime = () => {
+    const [seconds, setSeconds] = useState(0);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setSeconds(seconds => seconds = AudioPlayerInstance._howl.seek());
+        }, 1000);
+        return () => clearInterval(interval);
+    }, []);
+
+    return (
+        <>{seconds + " / "}</>
+    );
+};
 
 export class DoNothing extends Component {
     constructor(props) {
@@ -262,7 +277,14 @@ export class DoNothing extends Component {
                                                     <td className="color1" align="left">{c['disk']}.{trackNum}</td>
                                                     <td className="color2" align="left">{c['trackArtist']}</td>
                                                     <td className="color3" align="left">{c['trackTitle']}</td>
-                                                    <td className="color1" align="right">{c['duration']}</td>
+                                                    <td className="color1" align="right">
+                                                        {
+                                                            (this.state.playingInfo.isPlaying &&
+                                                                this.state.playingInfo.info.rowNum === i &&
+                                                                this.state.playingInfo.info.albumID === "Album".concat(item['id'].toString())) ?
+                                                                <CurrentTime /> : null
+                                                        }
+                                                        {c['duration']}</td>
                                                 </tr>)
                                         })}
                                     </tbody>
