@@ -4,7 +4,6 @@ import AudioPlayerInstance from './AudioPlayer';
 import Placeholder from './temp.PNG';
 import "bootstrap/dist/css/bootstrap.css";
 import './DoNothing.css'
-const moment = require('moment');
 
 var ImgStyle = {
     minWidth: "64px",
