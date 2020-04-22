@@ -21,15 +21,16 @@ namespace test02.Models
         /// </summary>
         /// <param name="time"></param>
         /// <returns>The string representation</returns>
-        public string ConvertTime(TimeSpan time)
+        public static string ConvertTime(TimeSpan time)
         {
             string result;
             string sec = time.Seconds <= 9 ? "0" + time.Seconds : time.Seconds.ToString();
 
-            if(time.Hours == 0)
+            if (time.Hours == 0)
             {
                 result = time.Minutes + ":" + sec;
-            } else
+            }
+            else
             {
                 string min = time.Minutes <= 9 ? "0" + time.Minutes : time.Minutes.ToString();
                 result = time.Hours + ":" + min + ":" + sec;
@@ -121,7 +122,7 @@ namespace test02.Models
                 {
                     Console.WriteLine("Updating Album to {0}, from {1}", tFile.Tag.Album, temp);
                     temp = tFile.Tag.Album;
-                    
+
                     AddAlbum(new Album
                     {
                         AlbumArtist = tFile.Tag.JoinedAlbumArtists,
@@ -129,7 +130,7 @@ namespace test02.Models
                         Id = GetGreatestAlbumId() + 1,
                         Year = (int)tFile.Tag.Year,
                         Tracks = new List<Tracks>(),
-                        
+
                         AlbumArtPath = GetAlbumArt(fi.FullName) ?? GetEmbedAlbumArt(tFile, fi.FullName) ?? "N/A"
                     });
 
@@ -144,7 +145,8 @@ namespace test02.Models
                         Duration = ConvertTime(tFile.Properties.Duration),
                         Path = fi.FullName
                     });
-                } else
+                }
+                else
                 {
                     int albumId = cond.Select(t => t.Id).FirstOrDefault();
                     AddTrack(new Tracks
@@ -178,7 +180,7 @@ namespace test02.Models
             try
             {
                 return db.Tracks.ToList();
-            } 
+            }
             catch
             {
                 throw;
@@ -267,8 +269,9 @@ namespace test02.Models
         {
 
             List<Tracks> trackListing = new List<Tracks>();
-            trackListing = (from Track in db.Tracks 
-                            where Track.AlbumId == id select Track).ToList();
+            trackListing = (from Track in db.Tracks
+                            where Track.AlbumId == id
+                            select Track).ToList();
 
             return trackListing;
         }
@@ -277,10 +280,11 @@ namespace test02.Models
         {
             int? maxId = db.Album.Max(u => (int?)u.Id);
 
-            if(maxId.HasValue)
+            if (maxId.HasValue)
             {
                 return maxId.Value;
-            } else
+            }
+            else
             {
                 return 0;
             }
@@ -290,10 +294,11 @@ namespace test02.Models
         {
             int? maxId = db.Tracks.Max(u => (int?)u.Id);
 
-            if(maxId.HasValue)
+            if (maxId.HasValue)
             {
                 return maxId.Value;
-            } else
+            }
+            else
             {
                 return 0;
             }

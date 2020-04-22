@@ -40,22 +40,26 @@ const CurrentTime = () => {
         return () => clearInterval(interval);
     }, []);
 
-    const getTimeString = (sec) => {
-        if (!(sec > 0)) {
-            return "00:00:00";
+    const FormatTime = (sec) => {
+        var seconds = parseInt(sec % 60);
+        var minutes = parseInt(sec / 60 % 60);
+        var hours = parseInt(sec / 60 / 60);
+
+        var res = "";
+        var resSec = seconds < 9 ? "0" + seconds : seconds.toString();
+
+        if (hours === 0) {
+            res = [minutes, resSec].join(':');
+        } else {
+            var resMin = minutes < 9 ? "0" + minutes : minutes.toString();
+            res = [hours, resMin, resSec].join(':');
         }
 
-        return [
-            parseInt(sec / 60 / 60),
-            parseInt(sec / 60 % 60),
-            parseInt(sec % 60)
-        ]
-            .join(":")
-            .replace(/\b(\d)\b/g, "0$1");
+        return res;
     }
 
     return (
-        <>{getTimeString(seconds) + " / "}</>
+        <>{FormatTime(seconds) + " / "}</>
     );
 };
 

@@ -38,6 +38,7 @@ class AudioSpectrumViz extends Component {
             for (var i = 0; i < data.length; i++) {
                 barH = data[i] / 2;
 
+                // TODO: color should be a gradient based on barH
                 ctx.fillStyle = 'rgb(' + (barH + 100) + ',50,50)';
                 ctx.fillRect(x, canvas.height - barH / 2, barW, barH);
 

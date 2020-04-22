@@ -36,6 +36,7 @@ class AudioPlayer {
     }
 
     setState(state) {
+        // TODO: Look into JSON validation
         this._state.playingInfo.isPlaying = state.playingInfo.isPlaying;
         this._state.playingInfo.info.albumID = state.playingInfo.info.albumID;
         this._state.playingInfo.info.rowNum = state.playingInfo.info.rowNum;
@@ -46,6 +47,8 @@ class AudioPlayer {
             const nextElem = document.getElementById(this._state.playingInfo.info.albumID);
             const elemArr = Array.from(nextElem.rows);
 
+            // TODO: Refactor to not use a loop
+            // loop should not be need, and is a remnant of previous code
             var broke = false;
             let row;
             for (row of elemArr) {
@@ -82,6 +85,11 @@ class AudioPlayer {
             this._howl.unload();
         }
 
+        // Get audio stream from ChunkAudioCDN
+        // at the moment this needs to use WebAudioAPI for visualizations
+        // but that also means that the WHOLE file needs to be downloaded
+        // & in memory to play.  The only fix at this point is to write
+        // a decoder that can handle chunks for EACH audio format (not just ogg / wav)
         this._state.sourceURL = 'https://localhost:3001'
             + url.replace(/\\/g, '/').replace("E:/Music/Main", "");
         this._howl = new Howl({
