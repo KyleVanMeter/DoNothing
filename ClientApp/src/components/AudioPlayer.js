@@ -44,29 +44,17 @@ class AudioPlayer {
 
     nextTrack() {
         if (this._state.isContinue) {
+            const rowInd = this._state.playingInfo.info.rowNum;
             const nextElem = document.getElementById(this._state.playingInfo.info.albumID);
             const elemArr = Array.from(nextElem.rows);
 
-            // TODO: Refactor to not use a loop
-            // loop should not be need, and is a remnant of previous code
-            var broke = false;
-            let row;
-            for (row of elemArr) {
-                if (row.rowIndex > this._state.playingInfo.info.rowNum) {
-                    row.dispatchEvent(new Event(
-                        'dblclick',
-                        { 'bubbles': true }
-                    ));
-
-                    broke = true;
-                    break;
-                }
-            }
-
-            if (!broke) {
-                // Default case at end of album.  Send dblclick to current playing track
-                // sets to 'not playing' state
-                row.dispatchEvent(new Event(
+            if (rowInd < elemArr.length - 1) {
+                elemArr[rowInd + 1].dispatchEvent(new Event(
+                    'dblclick',
+                    { 'bubbles': true }
+                ));
+            } else {
+                elemArr[elemArr.length - 1].dispatchEvent(new Event(
                     'dblclick',
                     { 'bubbles': true }
                 ));
