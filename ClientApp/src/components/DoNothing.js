@@ -41,6 +41,10 @@ const CurrentTime = () => {
     }, []);
 
     const FormatTime = (sec) => {
+        if (isNaN(sec)) {
+            return "0:00";
+        }
+
         var seconds = parseInt(sec % 60);
         var minutes = parseInt(sec / 60 % 60);
         var hours = parseInt(sec / 60 / 60);
